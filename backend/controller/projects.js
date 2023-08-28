@@ -12,17 +12,13 @@ module.exports = {
     });
   },
 
-  getProjectById: (req, res) => {
-    const projectId = req.params.id;
-    Project.getById(projectId, (err, project) => {
+  getAllProjects: (req, res) => {
+    Project.getAll((err, projects) => {
       if (err) {
-        console.error('Error fetching project:', err);
-        return res.status(500).json({ error: 'Error fetching project' });
+        console.error('Error fetching projects:', err);
+        return res.status(500).json({ error: 'Error fetching projects' });
       }
-      if (!project) {
-        return res.status(404).json({ error: 'Project not found' });
-      }
-      res.json(project);
+      res.json(projects);
     });
   },
 

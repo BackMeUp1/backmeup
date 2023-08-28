@@ -5,16 +5,16 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema backmeup
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema backmeup
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `backmeup` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema new_schema1
--- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `backmeup` DEFAULT CHARACTER SET utf8mb3 ;
 USE `backmeup` ;
 
 -- -----------------------------------------------------
@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`users` (
   `password` LONGTEXT NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`iduser`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -44,15 +46,14 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`projects` (
   `end-date` DATE NOT NULL,
   `comment` LONGTEXT NOT NULL,
   `image` LONGTEXT NOT NULL,
-  `users-account_iduser` INT NOT NULL,
-  PRIMARY KEY (`idprojects`, `users-account_iduser`),
-  INDEX `fk_projects_users-account_idx` (`users-account_iduser` ASC) VISIBLE,
+  `users_iduser` INT NOT NULL,
+  PRIMARY KEY (`idprojects`, `users_iduser`),
+  INDEX `fk_projects_users-account_idx` (`users_iduser` ASC) VISIBLE,
   CONSTRAINT `fk_projects_users-account`
-    FOREIGN KEY (`users-account_iduser`)
-    REFERENCES `backmeup`.`users` (`iduser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `backmeup`.`users` (`iduser`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -61,22 +62,19 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `backmeup`.`pledges` (
   `idpledges` INT NOT NULL AUTO_INCREMENT,
   `amount` DECIMAL(10,2) NOT NULL,
-  `users-account_iduser` INT NOT NULL,
+  `users_iduser` INT NOT NULL,
   `projects_idprojects` INT NOT NULL,
-  PRIMARY KEY (`idpledges`, `users-account_iduser`, `projects_idprojects`),
-  INDEX `fk_pledges_users-account1_idx` (`users-account_iduser` ASC) VISIBLE,
+  PRIMARY KEY (`idpledges`, `users_iduser`, `projects_idprojects`),
+  INDEX `fk_pledges_users-account1_idx` (`users_iduser` ASC) VISIBLE,
   INDEX `fk_pledges_projects1_idx` (`projects_idprojects` ASC) VISIBLE,
-  CONSTRAINT `fk_pledges_users-account1`
-    FOREIGN KEY (`users-account_iduser`)
-    REFERENCES `backmeup`.`users` (`iduser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_pledges_projects1`
     FOREIGN KEY (`projects_idprojects`)
-    REFERENCES `backmeup`.`projects` (`idprojects`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `backmeup`.`projects` (`idprojects`),
+  CONSTRAINT `fk_pledges_users-account1`
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `backmeup`.`users` (`iduser`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
