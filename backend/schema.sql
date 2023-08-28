@@ -12,36 +12,21 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema backmeup
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `backmeup` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema new_schema1
+-- -----------------------------------------------------
 USE `backmeup` ;
 
 -- -----------------------------------------------------
--- Table `backmeup`.`pledges`
+-- Table `backmeup`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `backmeup`.`pledges` (
-  `idpledges` INT NOT NULL AUTO_INCREMENT,
-  `amount` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`idpledges`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `backmeup`.`users-account`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `backmeup`.`users-account` (
+CREATE TABLE IF NOT EXISTS `backmeup`.`users` (
   `iduser` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` LONGTEXT NOT NULL,
-  `pledges_idpledges` INT NOT NULL,
-  `admin_account_idadmin` INT NOT NULL,
   `role` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`iduser`, `pledges_idpledges`),
-  INDEX `fk_users-account_pledges1_idx` (`pledges_idpledges` ASC) VISIBLE,
-  CONSTRAINT `fk_users-account_pledges1`
-    FOREIGN KEY (`pledges_idpledges`)
-    REFERENCES `backmeup`.`pledges` (`idpledges`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`iduser`))
 ENGINE = InnoDB;
 
 
@@ -58,14 +43,37 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`projects` (
   `start-date` DATE NOT NULL,
   `end-date` DATE NOT NULL,
   `comment` LONGTEXT NOT NULL,
-  `users-account_iduser` INT NOT NULL,
-  `admin_account_idadmin` INT NOT NULL,
   `image` LONGTEXT NOT NULL,
-  PRIMARY KEY (`idprojects`, `users-account_iduser`, `admin_account_idadmin`),
+  `users-account_iduser` INT NOT NULL,
+  PRIMARY KEY (`idprojects`, `users-account_iduser`),
   INDEX `fk_projects_users-account_idx` (`users-account_iduser` ASC) VISIBLE,
   CONSTRAINT `fk_projects_users-account`
     FOREIGN KEY (`users-account_iduser`)
-    REFERENCES `backmeup`.`users-account` (`iduser`)
+    REFERENCES `backmeup`.`users` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `backmeup`.`pledges`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `backmeup`.`pledges` (
+  `idpledges` INT NOT NULL AUTO_INCREMENT,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `users-account_iduser` INT NOT NULL,
+  `projects_idprojects` INT NOT NULL,
+  PRIMARY KEY (`idpledges`, `users-account_iduser`, `projects_idprojects`),
+  INDEX `fk_pledges_users-account1_idx` (`users-account_iduser` ASC) VISIBLE,
+  INDEX `fk_pledges_projects1_idx` (`projects_idprojects` ASC) VISIBLE,
+  CONSTRAINT `fk_pledges_users-account1`
+    FOREIGN KEY (`users-account_iduser`)
+    REFERENCES `backmeup`.`users` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pledges_projects1`
+    FOREIGN KEY (`projects_idprojects`)
+    REFERENCES `backmeup`.`projects` (`idprojects`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
