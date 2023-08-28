@@ -1,6 +1,6 @@
 module.exports = {
-  host: "your_host",
-  user: "your_user",
-  password: "your_password",
+  host: "localhost",
+  user: "root",
+  password: "root",
   database: "backmeup",
 };
