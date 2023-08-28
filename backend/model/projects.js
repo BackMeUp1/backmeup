@@ -4,8 +4,8 @@ async function createProject(projectData) {
     try {
       const query = `
         INSERT INTO projects 
-        (title, description, goal_amount, current_amount, is_approved, start_date, end_date, comment, users_account_iduser, admin_account_idadmin) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (title, description, goal_amount, current_amount, is_approved, start_date, end_date, comment, users_iduser) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
       await connection.query(query, [
         projectData.title,
@@ -16,8 +16,7 @@ async function createProject(projectData) {
         projectData.start_date,
         projectData.end_date,
         projectData.comment,
-        projectData.users_account_iduser,
-        projectData.admin_account_idadmin
+        projectData.users_iduser,
       ]);
     } finally {
       connection.release();
@@ -43,7 +42,7 @@ async function createProject(projectData) {
         UPDATE projects 
         SET title = ?, description = ?, goal_amount = ?, current_amount = ?, 
         is_approved = ?, start_date = ?, end_date = ?, comment = ?, 
-        users_account_iduser = ?, admin_account_idadmin = ? 
+        users_iduser = ?
         WHERE idprojects = ?
       `;
       await connection.query(query, [
@@ -55,8 +54,7 @@ async function createProject(projectData) {
         newData.start_date,
         newData.end_date,
         newData.comment,
-        newData.users_account_iduser,
-        newData.admin_account_idadmin,
+        newData.users_iduser,
         projectId
       ]);
     } finally {
