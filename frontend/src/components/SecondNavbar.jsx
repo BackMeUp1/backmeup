@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Games', 'Movies', 'Books','Tech','Designs'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function SecondNavbar() {
@@ -113,6 +113,7 @@ function SecondNavbar() {
           >
             LOGO
           </Typography>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -131,6 +132,7 @@ function SecondNavbar() {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+            
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -153,6 +155,7 @@ function SecondNavbar() {
                 </MenuItem>
               ))}
             </Menu>
+            
           </Box>
         </Toolbar>
       </Container>
