@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const projectController = require('../controller/projects.js'); // Update the path as needed
+const  {addProject,getProject,UpdateProject,RemoveProject} = require ("../controller/projects")
 
-router.post('/addone', projectController.createProject);
-router.get('/:id', projectController.getAllProjects);
-router.put('/:id', projectController.updateProjectById);
-router.delete('/:id', projectController.deleteProjectById);
+
+router.post('/add',addProject);
+router.get('/get',getProject)
+router.put('/:id',UpdateProject)
+router.delete('/:id',RemoveProject)
+
 
 module.exports = router;
