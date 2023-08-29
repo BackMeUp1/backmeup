@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -73,12 +74,7 @@ export default function Navbar() {
           >
             MUI
           </Typography>
-          <Button variant="contained">Musics</Button>
-          <Button variant="contained">Games</Button>
-          <Button variant="contained">Books</Button>
-          <Button variant="contained">Games</Button>
-          <Button variant="contained">Tech</Button>
-          <Button variant="contained">Designs</Button>
+        
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
