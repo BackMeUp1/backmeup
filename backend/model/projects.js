@@ -1,4 +1,3 @@
-// Create Operation - Insert a Project
 const connection = require("../database/index")
 
 
@@ -28,43 +27,6 @@ const remove = (projectid, callback) => {
       callback(error, results);
   });
 };
-  // // Update Operation - Update Project Information
-  // async function updateProject(projectId, newData) {
-  //   const connection = await pool.getConnection();
-  //   try {
-  //     const query = `
-  //       UPDATE projects 
-  //       SET title = ?, description = ?, goal_amount = ?, current_amount = ?, 
-  //       is_approved = ?, start_date = ?, end_date = ?, comment = ?, 
-  //       users_iduser = ?
-  //       WHERE idprojects = ?
-  //     `;
-  //     await connection.query(query, [
-  //       newData.title,
-  //       newData.description,
-  //       newData.goal_amount,
-  //       newData.current_amount,
-  //       newData.is_approved,
-  //       newData.start_date,
-  //       newData.end_date,
-  //       newData.comment,
-  //       newData.users_iduser,
-  //       projectId
-  //     ]);
-  //   } finally {
-  //     connection.release();
-  //   }
-  // }
-  
-  // // Delete Operation - Delete a Project
-  // async function deleteProject(projectId) {
-  //   const connection = await pool.getConnection();
-  //   try {
-  //     await connection.query('DELETE FROM projects WHERE idprojects = ?', [projectId]);
-  //   } finally {
-  //     connection.release();
-  //   }
-  // }
   module.exports ={
     add,
     getAll,

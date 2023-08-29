@@ -1,4 +1,5 @@
 const connection = require("../database/index.js");
+const bcrypt = require('bcrypt');
 
 const getAll = (callback) => {
     var sql  =`select * from users`
@@ -6,12 +7,27 @@ const getAll = (callback) => {
 callback(err,results)
     })
 }
- 
-const add = (callback,data) =>{
-    var sql =`insert into users (name,email,password,role) values(?,?,?,?)`
-    connection.query(sql,[data.name,data.email,data.password,data.role],(err,results)=>{
-callback(err,results)
-    })
-}
 
-  module.exports = { getAll,add};
+const addUser = (userData, callback) => {
+    const { name, email, password, role } = userData;
+    bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+        if (hashErr) {
+            callback(hashErr, null);
+        } else {
+            const sql = `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`;
+            connection.query(sql, [name, email, hashedPassword, role], (err, results) => {
+                console.log(err);
+                callback(err, results);
+            });
+        }
+    });
+};
+
+const getUserByEmail = (email, callback) => {
+    const sql = `SELECT * FROM users WHERE email = ?`;
+    connection.query(sql, [email], (err, results) => {
+        callback(err, results);
+    });
+};
+
+module.exports = { addUser, getUserByEmail ,getAll};

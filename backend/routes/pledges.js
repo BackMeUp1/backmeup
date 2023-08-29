@@ -1,9 +1,8 @@
 const express = require('express');
-const pledgeController = require('../controller/pledges');
-
+const {getPledges, addPledges} = require('../controller/pledges');
 const router = express.Router();
 
-router.post('/create', pledgeController.createPledge);
-router.get('/getAll', pledgeController.getAllPledges);
+router.get('/get',getPledges);
+router.post('/add',addPledges);
 
 module.exports = router;

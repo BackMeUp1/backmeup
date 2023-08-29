@@ -1,13 +1,18 @@
-const myConfig = require("../database/config")
+const connection = require("../database/index")
 
-// Create a new pledge
-exports.createPledge = async (amount) => {
-  const [result] = await myConfig.query('INSERT INTO pledges (amount) VALUES (?)', [amount]);
-  return result.insertId;
+const getAll = (callback) => {
+  const sql = 'SELECT * FROM `pledges`'
+  connection.query(sql,function (error,results){
+      callback(error, results)
+  })
 };
 
-// Get all pledges
-exports.getAllPledges = async () => {
-  const [rows] = await MyConfig.query('SELECT * FROM pledges');
-  return rows;
+const add = (pledgesData, callback) => {
+  const sql = `INSERT INTO pledges (amount, users_iduser, projects_idprojects) VALUES (?, ?, ?)`;
+  const { amount, users_iduser, projects_idprojects } = pledgesData;
+
+  connection.query(sql, [amount, users_iduser, projects_idprojects], function (error, results) {
+    callback(error, results);
+  });
 };
+module.exports ={getAll ,add}
