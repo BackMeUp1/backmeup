@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`users` (
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -47,12 +47,14 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`projects` (
   `comment` LONGTEXT NOT NULL,
   `image` LONGTEXT NOT NULL,
   `users_iduser` INT NOT NULL,
+  `categories` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idprojects`, `users_iduser`),
   INDEX `fk_projects_users-account_idx` (`users_iduser` ASC) VISIBLE,
   CONSTRAINT `fk_projects_users-account`
     FOREIGN KEY (`users_iduser`)
     REFERENCES `backmeup`.`users` (`iduser`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -74,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `backmeup`.`pledges` (
     FOREIGN KEY (`users_iduser`)
     REFERENCES `backmeup`.`users` (`iduser`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
 
 

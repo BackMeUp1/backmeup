@@ -1,22 +1,22 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProjectList from './components/ProjectList'
-import './App.css'
+
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import Navbar from "./components/Navbar"
+import SecondNavbar from "./components/SecondNavbar";
+
+import Home from "./components/client/Home"
+
 
 function App() {
-  
   return (
-    <Router>
-      <Routes>
-        
-{/*           
-         <Route path= "/Home" element={<Home/>} /> */}
-          <Route path="/" element={<ProjectList />} />
-          {/* <Route path="*" element={<NoPage />} /> */}
-        
-      </Routes>
-    </Router>
-  )
-}
+    <BrowserRouter>
+    <SecondNavbar/>
+    <Routes>
+<Route path="/Home" element={<Home/>}/>
+<Route path= "/" element ={<Navbar/>}/>
+    </Routes>
+    </BrowserRouter>
+  )}
 
 
-export default App
+  export default App
