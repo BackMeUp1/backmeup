@@ -5,18 +5,18 @@ import './App.css'
 function App() {
   
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         
-          
-         <Route path= "/Home" element={<Home/>} />
-          <Route path="projectList" element={<ProjectList />} />
-          <Route path="*" element={<NoPage />} />
+{/*           
+         <Route path= "/Home" element={<Home/>} /> */}
+          <Route path="/" element={<ProjectList />} />
+          {/* <Route path="*" element={<NoPage />} /> */}
         
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
 
 export default App
