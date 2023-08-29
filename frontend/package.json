@@ -14,20 +14,14 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-<<<<<<< HEAD
     "@mui/icons-material": "^5.14.6",
     "@mui/material": "^5.14.6",
-    "framer-motion": "^10.16.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-=======
     "axios": "^1.5.0",
     "babel": "^6.23.0",
     "framer-motion": "^10.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.15.0",
->>>>>>> 4be26a5a1dc00a1c464c90ada9b8103d38db7fb1
     "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
