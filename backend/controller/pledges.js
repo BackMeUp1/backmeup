@@ -1,28 +1,25 @@
-const pledgeModel = require('../model/pledges');
-
-// Create a new pledge
-exports.createPledge = async (req, res) => {
-  try {
-    const { amount } = req.body;
-    const newPledgeId = await pledgeModel.createPledge(amount);
-    res.json({ id: newPledgeId, message: 'Pledge created successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
+const {getAll ,add} = require('../model/pledges');
+const getPledges = (req, res) => {
+  getAll((err,results)=>{
+  err ? res.status(500).json(err) : res.status(200).json(results)
+  })
+  
+  };
+  
+  const addPledges = (req, res) => {
+    const PledgesData = req.body; 
+    
+    add(PledgesData, (error, results) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json(error); 
+      } else {
+        res.status(201).json(results);
+      }
+    });
+  };
+  
+  module.exports ={
+    getPledges,
+    addPledges
   }
-};
-
-// Get all pledges
-exports.getAllPledges = async (req, res) => {
-  try {
-    const pledges = await pledgeModel.getAllPledges();
-    res.json(pledges);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
-  }
-};
-
-
-
-
