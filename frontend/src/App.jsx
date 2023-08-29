@@ -18,4 +18,4 @@ function App() {
     </BrowserRouter>
   )}
 
-  export default Home
+  export default App

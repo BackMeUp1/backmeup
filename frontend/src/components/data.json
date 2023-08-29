@@ -8,8 +8,8 @@
       "start-date": "2023-08-01",
       "end-date": "2023-08-31",
       "comment": "Comments for Project One",
-      "image": "image_url_1.jpg",
-      "users-account_iduser": 1
+      "image": "image_url_1.jpg"
+      
     },
     {
       "title": "Project Two",
