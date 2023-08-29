@@ -73,6 +73,12 @@ export default function Navbar() {
           >
             MUI
           </Typography>
+          <Button variant="contained">Musics</Button>
+          <Button variant="contained">Games</Button>
+          <Button variant="contained">Books</Button>
+          <Button variant="contained">Games</Button>
+          <Button variant="contained">Tech</Button>
+          <Button variant="contained">Designs</Button>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
