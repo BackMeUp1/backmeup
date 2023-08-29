@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import Navbar from "./components/Navbar"
 import SecondNavbar from "./components/SecondNavbar";
 
-import Home from "./components/Home"
+import Home from "./components/client/Home"
 
 
 function App() {
