@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
+import { query } from 'express';
 
 
 
@@ -59,13 +60,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar(props) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [query, setQuery] = useState('');
 
-  const handleSearch = event => {
-    const query = event.target.value;
-    setSearchQuery(query);
-  };
-  props.stal(searchQuery)
+  const handleSearch = (event) => {
+    setQuery(event.target.value) ;
+    props.onSearch(event.target.value)
+
+  }
 
 
   return (
@@ -97,11 +98,8 @@ function Navbar(props) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={searchQuery}
-              onChange={() => {
-                handleSearch
-                props.stal(searchQuery)
-              }}
+              value={query}
+              onChange={handleSearch}
             />
           </Search>
         </Toolbar>

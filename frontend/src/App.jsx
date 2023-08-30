@@ -72,7 +72,7 @@ function App() {
       <SecondNavbar />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={projects} />
+       
         <Route
           path="/detail/:id"
           element={<ProjectDetail project={selectedProject} />}
