@@ -9,7 +9,6 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
-import { query } from 'express';
 
 
 
@@ -56,13 +55,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar(props) {
-  const [searchQuery, setSearchQuery] = useState('');
+    const [query, setQuery] = useState('');
 
-  const handleSearch = event => {
-    const query = event.target.value;
-    setSearchQuery(query);
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+    props.onSearch(e.target.value);
   };
-  props.stal(searchQuery)
 
 
   return (
