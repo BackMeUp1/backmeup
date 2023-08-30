@@ -107,6 +107,7 @@ import './ProjectList.css';
 import ProjectDetail from './ProjectDetail';
 
 const ProjectList = (props) => {
+  console.log(props,"my props");
   
   const [selectedProject, setSelectedProject] = useState(null);
 
