@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,6 +8,9 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchOne from './SearchOne';
+
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -24,6 +27,9 @@ const Search = styled('div')(({ theme }) => ({
     width: 'auto',
   },
 }));
+
+
+
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -52,7 +58,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+function Navbar(props) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = event => {
+    const query = event.target.value;
+    setSearchQuery(query);
+  };
+  props.stal(searchQuery)
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -82,6 +97,11 @@ export default function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={searchQuery}
+              onChange={() => {
+                handleSearch
+                props.stal(searchQuery)
+              }}
             />
           </Search>
         </Toolbar>
@@ -90,3 +110,4 @@ export default function Navbar() {
   );
 }
 
+export default Navbar;

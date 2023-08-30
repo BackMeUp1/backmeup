@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -9,11 +8,17 @@ import ProjectDetail from './components/ProjectDetail';
 import axios from 'axios';
 import Footer from "./components/Footer"; // Import the Footer component
 import Dashboard from './components/admin/dashboard.jsx'
+import SearchOne from "./components/SearchOne";
+
 
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+ 
   useEffect(() => {
     axios
       .get('http://localhost:4000/api/project/get')
@@ -69,9 +74,15 @@ const ProtectedRoute = ({ children, user }) => {
     };
     fetchUserData();
   }, [isAuthenticated]);
+  
+  
+   const stalSearch =(str) => {
+    setSearchQuery(str);
+
+  };
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar data={data} stal={stalSearch } />
     <SecondNavbar />
       <Routes>
             <Route path="/login" element={<Login />} />
@@ -88,6 +99,7 @@ const ProtectedRoute = ({ children, user }) => {
           path="/detail/:id"
           element={<ProjectDetail project={selectedProject} />}
         /> 
+        <Route path="/search" element={<SearchOne str={searchQuery}  data={data}/>} />
  <Route path="/admin/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
