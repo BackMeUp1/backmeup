@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SecondNavbar from './components/SecondNavbar';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import Footer from "./components/Footer"; // Import the Footer component
 import Dashboard from './components/admin/dashboard.jsx'
 import SearchOne from "./components/SearchOne";
+import login from "./components/login"
 
 
 
@@ -53,6 +54,7 @@ const ProtectedRoute = ({ children, user }) => {
   const isAuthenticated = localStorage.getItem('token') !== true;
 
   useEffect(() => {
+    
     const fetchUserData = async () => {
       if (isAuthenticated) {
         try {
@@ -82,10 +84,10 @@ const ProtectedRoute = ({ children, user }) => {
   };
   return (
     <BrowserRouter>
-      <Navbar data={data} stal={stalSearch } />
+      <Navbar  stal={stalSearch } />
     <SecondNavbar />
       <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<login />} />
        <Route
              path="/home"
              element={
@@ -94,13 +96,12 @@ const ProtectedRoute = ({ children, user }) => {
             </ProtectedRoute>
                       }
         />
-        <Route path="/" element={<MainContent projects={projects} />} />
-        <Route
-          path="/detail/:id"
-          element={<ProjectDetail project={selectedProject} />}
-        /> 
-        <Route path="/search" element={<SearchOne str={searchQuery}  data={data}/>} />
- <Route path="/admin/Dashboard" element={<Dashboard />} />
+        
+        <Route path="/" element={<><ProjectList projects={projects} /> </>} />
+<Route path="/detail/:id" element={<ProjectDetail project={selectedProject} projects={projects} />} />
+<Route path="/search" element={<SearchOne str={searchQuery}  />} />
+<Route path="/admin/Dashboard" element={<Dashboard />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>
