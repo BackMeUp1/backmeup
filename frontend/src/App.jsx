@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route ,Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SecondNavbar from './components/SecondNavbar';
 import Home from './components/Home';
+import ProjectList from "./components/projectList.jsx"
 import ProjectDetail from './components/ProjectDetail';
 import axios from 'axios';
 import Footer from './components/Footer';
@@ -68,11 +69,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar stal={stalSearch} />
+      <Navbar stal={stalSearch}  />
       <SecondNavbar />
+      <ProjectList  projects={projects}/>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={projects} />
         <Route
           path="/detail/:id"
           element={<ProjectDetail project={selectedProject} />}

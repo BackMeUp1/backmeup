@@ -59,13 +59,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar(props) {
-  const [searchQuery, setSearchQuery] = useState('');
+    const [query, setQuery] = useState('');
 
-  const handleSearch = event => {
-    const query = event.target.value;
-    setSearchQuery(query);
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+    props.onSearch(e.target.value);
   };
-  props.stal(searchQuery)
 
 
   return (
@@ -97,11 +96,8 @@ function Navbar(props) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={searchQuery}
-              onChange={() => {
-                handleSearch
-                props.stal(searchQuery)
-              }}
+              value={query}
+              onChange={handleSearch}
             />
           </Search>
         </Toolbar>
