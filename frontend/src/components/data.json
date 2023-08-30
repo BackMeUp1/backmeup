@@ -1,38 +1,55 @@
 [
     {
-      "title": "Project One",
-      "description": "Description for Project One",
-      "goal_amount": 1000.00,
-      "current_amount": 250.00,
-      "is_approved": 1,
-      "start-date": "2023-08-01",
-      "end-date": "2023-08-31",
-      "comment": "Comments for Project One",
-      "image": "image_url_1.jpg"
-      
-    },
-    {
-      "title": "Project Two",
-      "description": "Description for Project Two",
-      "goal_amount": 500.00,
-      "current_amount": 125.00,
-      "is_approved": 1,
-      "start-date": "2023-09-01",
-      "end-date": "2023-09-30",
-      "comment": "Comments for Project Two",
-      "image": "image_url_2.jpg",
-      "users-account_iduser": 1
-    },
-    {
-      "title": "Project Three",
-      "description": "Description for Project Three",
-      "goal_amount": 1500.00,
-      "current_amount": 300.00,
-      "is_approved": 0,
-      "start-date": "2023-10-01",
-      "end-date": "2023-10-31",
-      "comment": "Comments for Project Three",
-      "image": "image_url_3.jpg",
-      "users-account_iduser": 2
-    }
+    "title": "movie is in the air",
+    "description": "En août 2020, certains services de Google Play Musique cesseront de fonctionner. En septembre 2020, l'accès à Google Play Musique commencera à être supprimé pour certains utilisateurs. Si Google Play Musique est votre service par défaut",
+    "goal_amount": 1234.00,
+    "current_amount": 250.00,
+    "start-date": "2023-08-01",
+    "end-date": "2023-08-31",
+    "comment": "Comments for Project One",
+    "image": "image_url_1.jpg",
+    "is_approved":0,
+    "categories": "movies",
+    "users_iduser": 8
+  },
+
+  {
+    "title": "books history",
+    "description": "bookks very good",
+    "goal_amount": 1347.00,
+    "current_amount": 250.00,
+    "start-date": "2023-08-01",
+    "end-date": "2023-08-31",
+    "comment": "Comments for Project One",
+    "image": "image_url_1.jpg",
+    "is_approved":0,
+    "categories": "movies",
+    "users_iduser": 9
+  },
+  {
+    "title": "tech is life",
+    "description": "Description for Project One",
+    "goal_amount": 1000.00,
+    "current_amount": 250.00,
+    "start-date": "2023-08-01",
+    "end-date": "2023-08-31",
+    "comment": "Comments for Project One",
+    "image": "image_url_1.jpg",
+    "is_approved":0,
+    "categories": "tech",
+    "users_iduser": 10
+  },
+  {
+    "title": "games entertainmenet",
+    "description": "Description for Project One",
+    "goal_amount": 1000.00,
+    "current_amount": 250.00,
+    "start-date": "2023-08-01",
+    "end-date": "2023-08-31",
+    "comment": "Comments for Project One",
+    "image": "image_url_1.jpg",
+    "is_approved":0,
+    "categories": "games",
+    "users_iduser": 11
+  }
   ]
