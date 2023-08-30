@@ -34,7 +34,7 @@ export default function RecipeReviewCard() {
   };
 
   
-  const projects = require('./data.json'); // Update the path accordingly
+  const projects = require('./data.json'); 
   const mostFundedProject = projects.reduce((max, project) => {
     return project.current_amount > max.current_amount ? project : max;
   }, projects[0]);

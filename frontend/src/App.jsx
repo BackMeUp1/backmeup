@@ -1,11 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
-import SecondNavbar from './components/SecondNavbar.jsx'; 
-import Home from './components/Home.jsx';
-import Login from './components/login.jsx';
+
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import SecondNavbar from './components/SecondNavbar';
+import ProjectList from './components/ProjectList';
+import Home from './components/Home';
+import ProjectDetail from './components/ProjectDetail';
+import axios from 'axios';
+import Footer from "./components/Footer"; // Import the Footer component
 import Dashboard from './components/admin/dashboard.jsx'
 
+
+function App() {
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/api/project/get')
+      .then((response) => {
+        setProjects(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  // Callback function to receive data from ProjectList
+  const handleProjectSelect = (project) => {
+    setSelectedProject(project);
+  };
 const PrivateRoute = ({ element, isAuthenticated, ...rest }) => {
   return isAuthenticated ? (
     <Route {...rest} element={element} />
@@ -19,9 +42,8 @@ const ProtectedRoute = ({ children, user }) => {
 
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
-
-function App() {
-  const [user, setUser] = useState(null);
+  
+   const [user, setUser] = useState(null);
   
   const isAuthenticated = localStorage.getItem('token') !== true;
 
@@ -47,14 +69,13 @@ function App() {
     };
     fetchUserData();
   }, [isAuthenticated]);
-
   return (
     <BrowserRouter>
       <Navbar />
+    <SecondNavbar />
       <Routes>
-        <Route path="/" element={<SecondNavbar />} />
-        <Route path="/login" element={<Login />} />
-        <Route
+            <Route path="/login" element={<Login />} />
+       <Route
              path="/home"
              element={
             <ProtectedRoute user={user}>
@@ -62,10 +83,17 @@ function App() {
             </ProtectedRoute>
                       }
         />
-      <Route path="/admin/Dashboard" element={<Dashboard />} />
+        <Route path="/" element={<MainContent projects={projects} />} />
+        <Route
+          path="/detail/:id"
+          element={<ProjectDetail project={selectedProject} />}
+        /> 
+ <Route path="/admin/Dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
+
 
 export default App;
