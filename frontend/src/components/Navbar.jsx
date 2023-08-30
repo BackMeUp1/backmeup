@@ -60,13 +60,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar(props) {
-  const [query, setQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (event) => {
-    setQuery(event.target.value) ;
-    props.onSearch(event.target.value)
-
-  }
+  const handleSearch = event => {
+    const query = event.target.value;
+    setSearchQuery(query);
+  };
+  props.stal(searchQuery)
 
 
   return (
