@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { addUser, getUserByEmail ,getAll} = require("../model/users");
+const { addUser, getUserByEmail ,getAll, remove} = require("../model/users");
 const secretKey = 'My$3cUr3K3y!F0rJWT';
 const bcrypt = require('bcrypt');
 const getUsers = (req, res) => {
@@ -12,10 +12,18 @@ const getUsers = (req, res) => {
   });
 };
 
+const RemoveUser = (req, res) => {
+    const id = req.params.id;
+  
+    remove(id, function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  };
+
 function signUp(req, res) {
     const { name, email, password, role } = req.body;
-console.log(req.body,"from controller");
-    getUserByEmail(email, (err, results) => {
+        getUserByEmail(email, (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Database error' });
         }
@@ -53,13 +61,21 @@ function signIn(req, res) {
 
             const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
 
+            res.cookie("jwt", token, {
+                httpOnly: true, 
+                maxAge: 3600000, 
+                secure: process.env.NODE_ENV === 'production', 
+            });
+
             res.status(200).json({ token });
         });
     });
 }
 
+
 module.exports = {
     signUp,
     signIn,
-    getUsers
+    getUsers,
+    RemoveUser
 };
