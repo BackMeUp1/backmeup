@@ -1,41 +1,3 @@
-
-// import React from 'react';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Navbar from './components/Navbar';
-// import SecondNavbar from './components/SecondNavbar';
-// import ProjectList from './components/ProjectList';
-// import Home from './components/Home';
-// import ProjectDetail from './components/ProjectDetail';
-// function App() {
-//   const [selectedProject, setSelectedProject] = useState(null);
-
-//   // Callback function to receive data from ProjectList
-//   const handleProjectSelect = (project) => {
-//     setSelectedProject(project);
-//   };
-//   return (
-//     <BrowserRouter>
-//       <Navbar />
-//       <Routes>
-//         <Route path="/Home" element={<Home />} />
-//         <Route path="/" element={<MainContent />} />
-//         <Route path="/detail/:id" element={<ProjectDetail />} />
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// function MainContent() {
-//   return (
-//     <>
-//       <SecondNavbar />
-//       <ProjectList onProjectSelect={handleProjectSelect}/>
-      
-//     </>
-//   );
-// }
-
-// export default App;
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -44,6 +6,8 @@ import ProjectList from './components/ProjectList';
 import Home from './components/Home';
 import ProjectDetail from './components/ProjectDetail';
 import axios from 'axios';
+import Footer from "./components/Footer"; // Import the Footer component
+
 function App() {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -66,6 +30,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
+    <SecondNavbar />
       <Routes>
         <Route path="/Home" element={<Home />} />
         <Route path="/" element={<MainContent projects={projects} />} />
@@ -74,17 +39,11 @@ function App() {
           element={<ProjectDetail project={selectedProject} />}
         /> 
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
 
-function MainContent() {
-  return (
-    <>
-      <SecondNavbar />
-      <ProjectList projects={projects} />
-    </>
-  );
-}
 
 export default App;
+
