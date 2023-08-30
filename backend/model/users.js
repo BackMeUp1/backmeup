@@ -29,5 +29,11 @@ const getUserByEmail = (email, callback) => {
         callback(err, results);
     });
 };
+const remove = (usersId, callback) => {
+    const sql = `DELETE FROM users WHERE iduser = ?`;
+    connection.query(sql, [usersId], function(error, results) {
+        callback(error, results);
+    });
+}
 
-module.exports = { addUser, getUserByEmail ,getAll};
+module.exports = { addUser, getUserByEmail ,getAll,remove};
