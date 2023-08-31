@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ProjectList = (props) => {
   const navigate = useNavigate();
-  const { projects, setSelected ,filProjects, onProjectSelect } = props;
+  const { projects, setSelected ,filProjects,  } = props;
   
   
 
@@ -28,7 +28,7 @@ const ProjectList = (props) => {
                 alt="image"
                 onClick={() => {
                   setSelected(project);
-                  navigate('/ProjetDetail')
+                  navigate('/ProjectDetail')
                 }}
               />
             

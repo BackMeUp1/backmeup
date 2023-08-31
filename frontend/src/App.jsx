@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
 // import Herosection from './components/Herosection';
+import ContactUs from "./components/ContactUs";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -159,6 +160,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Footer />
     </BrowserRouter>
