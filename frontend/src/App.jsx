@@ -15,6 +15,7 @@ import Added from "./components/Added";
 import { filledInputClasses } from "@mui/material";
 
 // import Herosection from './components/Herosection';
+import ContactUs from "./components/ContactUs";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -182,6 +183,7 @@ const reload =()=>{
             </ProtectedRoute>
           }
         />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Footer />
     </BrowserRouter>
