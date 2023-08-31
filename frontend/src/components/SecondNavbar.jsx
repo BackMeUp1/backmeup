@@ -26,15 +26,12 @@ function SecondNavbar({ onCategorySelect }) {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -44,6 +41,7 @@ function SecondNavbar({ onCategorySelect }) {
             variant="h6"
             noWrap
             component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -56,7 +54,6 @@ function SecondNavbar({ onCategorySelect }) {
           >
             
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -98,6 +95,7 @@ function SecondNavbar({ onCategorySelect }) {
             variant="h5"
             noWrap
             component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -111,26 +109,8 @@ function SecondNavbar({ onCategorySelect }) {
           >
             logo
           </Typography>
-          
-          {/* <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "center", // Center align items horizontally
-            }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box> */}
 
-<Box
+          <Box
   sx={{
     flexGrow: 1,
     display: { xs: "none", md: "flex" },
