@@ -10,12 +10,13 @@ import Footer from './components/Footer';
 import Dashboard from './components/admin/dashboard.jsx';
 import SearchOne from './components/SearchOne';
 import Login from './components/login.jsx';
-
+import Herosection from './components/Herosection'
 function App() {
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
+ 
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
+  const [selected, setSelected] = useState({});
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
@@ -85,14 +86,28 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar stal={stalSearch}  />
-      <SecondNavbar onCategorySelect={handleCategorySelect} />
+      <SecondNavbar />
+            <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <ProjectList path="/ProjectList"  projects={projects} filProjects={filteredProjects}/>
       <Routes>
+     {/* <Route path="/" element= { <ProjectList  projects={projects} setSelected={setSelected}/>} /> */}
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/" element= {<Herosection projects={projects} />} /> */}
+
         <Route
-          path="/detail/:id"
-          element={<ProjectDetail project={selectedProject} />}
+          path="/"
+          element={
+            <>
+              {projects.length > 0 && <Herosection projects={projects} />}
+              <ProjectList projects={projects} setSelected={setSelected} />
+            </>
+          }
+        />
+
+        <Route
+          path="/ProjetDetail"
+          element={<ProjectDetail project={selected}  />}
         />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
 
