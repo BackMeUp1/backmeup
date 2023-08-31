@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from 'react';
 
-import './ProjectList.css';
-import ProjectDetail from './ProjectDetail';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './ProjectList.css'
+import { useNavigate } from 'react-router-dom'
 
 const ProjectList = (props) => {
-  const {projects} =props  
-  const [selectedProject, setSelectedProject] = useState(null);
-
+  const navigate = useNavigate();
+  const { projects, setSelected } = props;
+console.log(props);
   const handleImageClick = (project) => {
-    setSelectedProject(project);
+    setSelected(project);
+    console.log(project);
   };
-
- 
+  
 
   return (
     <div className="list">
       <ul>
         {projects.map((project, index) => (
           <li key={index}>
-            <img
-              src={project.image}
-              alt="image"
-              onClick={() => props.onProjectSelect(project)}
-            />
+           
+              <img
+                src={project.image}
+                alt="image"
+                onClick={() => {
+                  setSelected(project);
+                  navigate('/ProjetDetail')
+                }}
+              />
+            
             <h3>{project.title}</h3>
             <p>{project.description}</p>
             <p>Goal: ${project.goal_amount}</p>
@@ -34,7 +40,6 @@ const ProjectList = (props) => {
           </li>
         ))}
       </ul>
-      {selectedProject && <ProjectDetail project={selectedProject} />}
     </div>
   );
 };
