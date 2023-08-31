@@ -7,6 +7,12 @@ const getAll = (callback) => {
 callback(err,results)
     })
 }
+const getById = (userId, callback) => {
+    const sql = `SELECT * FROM users WHERE iduser = ?`;
+    connection.query(sql, [userId], (err, results) => {
+        callback(err, results);
+    });
+};
 
 const addUser = (userData, callback) => {
     const { name, email, password, role } = userData;
@@ -36,4 +42,4 @@ const remove = (usersId, callback) => {
     });
 }
 
-module.exports = { addUser, getUserByEmail ,getAll,remove};
+module.exports = { addUser, getUserByEmail ,getAll,remove , getById};
