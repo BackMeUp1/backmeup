@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 import './ProjectList.css'
 import { useNavigate } from 'react-router-dom'
 
+
 const ProjectList = (props) => {
   const navigate = useNavigate();
   const { projects, setSelected ,filProjects, onProjectSelect } = props;
-import { useState } from "react";
+  
+  
   const handleImageClick = (project) => {
     setSelected(project);
-    console.log(project);
   };
+  
   const projectsToRender = filProjects.length > 0 ? filProjects : projects;
   return (
     <div className="list">
