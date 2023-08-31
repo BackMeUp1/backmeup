@@ -12,7 +12,10 @@ import Dashboard from "./components/Dashboard.jsx";
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
+import { filledInputClasses } from "@mui/material";
+
 // import Herosection from './components/Herosection';
+import ContactUs from "./components/ContactUs";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -28,11 +31,14 @@ function App() {
       .get("http://localhost:4000/api/project/get")
       .then((response) => {
         setProjects(response.data);
+        
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [refresh]);
+
+
 
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
@@ -79,6 +85,18 @@ function App() {
     fetchUser();
   }, []);
 
+const projectList =(query)=>{
+if (!query){
+  setrefresh(!refresh)
+}
+else setProjects(projects.filter((e) => {
+  console.log("el", e);
+  return (
+    e.title.toLowerCase().includes(query.toLowerCase()) ||
+    e.categories.toLowerCase().includes(query.toLowerCase())
+  );}))
+}
+
   const ProtectedRoute = ({ role, children }) => {
     console.log(!load);
     if (!load) {
@@ -96,10 +114,12 @@ function App() {
   const handleSearch = (str) => {
     setSearchQuery(str);
   };
-
+const reload =()=>{
+  setrefresh(!refresh)
+}
   return (
     <BrowserRouter>
-      <Navbar handleSearch={handleSearch} />
+      <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/>
       <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
@@ -113,6 +133,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="/added"
           element={
@@ -150,7 +171,9 @@ function App() {
           element={<ProjectDetail project={selected} />}
         />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
+        
         <Route
+        
           path="/x"
           element={
             <ProtectedRoute role="user">
@@ -158,6 +181,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/dashboard"
           element={
@@ -166,6 +190,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Footer />
     </BrowserRouter>
