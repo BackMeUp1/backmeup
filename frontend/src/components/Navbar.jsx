@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
 import { Button } from '@mui/material';
-
+import { useNavigate } from 'react-router';
 
 
 
@@ -57,23 +57,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar(props) {
-    const [query, setQuery] = useState('');
-
-  const handleSearch = (e) => {
-    var x = e.target.value
-    setQuery(x);
-   console.log(x);
-  };
-const searchedPorject= ()=>{
- const filtered=props.projects.filter((e)=>{
-  console.log("el",e);
-    return e.title.toLowerCase().includes(query.toLowerCase()) || 
-      e.categories.toLowerCase().includes(query.toLowerCase())
- })
+ 
   
-   props.setprojects(filtered)
-   console.log("projects",props.projects );
-  }
+
+const navigate= useNavigate()
+
+
+  
+  
+  
 
 
   return (
@@ -105,20 +97,19 @@ const searchedPorject= ()=>{
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={query}
               onChange={(e)=>{
-                setQuery(e.target.value);                
+                
+               props.projectlist(e.target.value);   
+
               }}
             />
-            <button onClick={()=>{
-              searchedPorject(query)
-            }}></button>
+          
           </Search>
           <Button
     variant="contained"
     color="primary"
     onClick={() => {
-      // Add your logic for starting a project here
+      navigate("/added")
     }}
   >
     Start a Project

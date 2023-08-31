@@ -3,7 +3,7 @@
 import React from 'react';
 
 const ProjectDetail = (props) => {
-  
+  console.log(props,"detail");
 
 
   return (

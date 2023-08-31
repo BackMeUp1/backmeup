@@ -7,8 +7,12 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Navigate, useNavigate } from 'react-router-dom'
+import ContactUs from "./ContactUs";
+
 
 const Footer = () => {
+  const navigate = useNavigate();
   const footerStyle = {
     backgroundColor: "#333",
     color: "#fff",
@@ -25,6 +29,9 @@ const Footer = () => {
     marginRight: "8px", // Reduce the margin for social icons
     color: "#fff",
   };
+  const handleContact=()=>{
+    navigate("contact")
+  }
 
   return (
     <Box style={footerStyle}>
@@ -34,8 +41,8 @@ const Footer = () => {
       <Typography variant="body2" style={smallText}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus placerat ex.
       </Typography>
-      <Typography variant="h6" style={{ ...smallText, marginTop: "5px" }}>
-        Contacts
+      <Typography  onClick={handleContact}  variant="h6" style={{ ...smallText, marginTop: "5px" }}  >
+        Contact Us 
       </Typography>
       <Typography variant="body2" style={smallText}>
         Email: contact@example.com<br />
