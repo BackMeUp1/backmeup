@@ -1,18 +1,15 @@
 
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ProjectDetail = (props) => {
-  const navigate = useNavigate();
+  
 
-  const handleImageClick = () => {
-    navigate(`/detail/${project.id}`); // Assuming each project has a unique ID
-  };
 
   return (
     <div>
-      <img src={props.project.image} alt="image" onClick={handleImageClick} />
+      {console.log(props,"hi")}
+      <img src={props.project.image}  />
       <h3>{props.project.title}</h3>
       <p>{props.project.description}</p>
       <p>Goal: ${props.project.goal_amount}</p>

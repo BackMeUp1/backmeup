@@ -10,6 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
 import { Button } from 'bootstrap';
+import { Button } from '@mui/material';
 
 
 
@@ -86,7 +87,7 @@ const searchedPorject= ()=>{
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            
           </IconButton>
           <Typography
             variant="h6"
@@ -113,6 +114,15 @@ const searchedPorject= ()=>{
               searchedPorject(query)
             }}></button>
           </Search>
+          <Button
+    variant="contained"
+    color="primary"
+    onClick={() => {
+      // Add your logic for starting a project here
+    }}
+  >
+    Start a Project
+  </Button>
         </Toolbar>
       </AppBar>
     </Box>
