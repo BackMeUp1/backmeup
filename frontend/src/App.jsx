@@ -11,13 +11,51 @@ import SearchOne from './components/SearchOne';
 import Login from './components/login';
 import Dashboard from "./components/Dashboard.jsx";
 import Cookies from 'js-cookie';
-
+import Login from './components/login.jsx';
+import Added from "./components/Added"
+import Herosection from './components/Herosection'
 function App() {
+  const [projects, setProjects] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState(null);
+  const [refresh, setrefresh] = useState(false)
+  const [selected, setSelected] = useState({});
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [projects, setProjects] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
   const [load,setLoad] =useState(true)
   useEffect(() => {
+    axios
+      .get('http://localhost:4000/api/project/get')
+      .then((response) => {
+        setProjects(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  // Callback function to receive data from ProjectList
+  const handleProjectSelect = (project) => {
+    setSelectedProject(project);
+  };
+
+
+  const handleCategorySelect = (category) => {
+    setSearchQuery(''); // Clear search query when changing categories
+    setSelectedProject(null); // Clear selected project
+  
+    // Filter projects based on the selected category
+    const newFilteredProjects = category
+      ? projects.filter((project) => project.categories === category)
+      : projects;
+  
+    setFilteredProjects(newFilteredProjects);
+  };
+
+
+  const isAuthenticated = localStorage.getItem('token') !== true;
 
   const fetchUser = async () => {
     setLoad(true)
@@ -60,15 +98,27 @@ function App() {
     <BrowserRouter>
       <Navbar handleSearch={handleSearch} />
       <SecondNavbar />
-      <ProjectList projects={projects} />
       <Routes>
-        <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/dashboard" /> : <Navigate to="/home" /> : <Login />} />
-        <Route path="/detail/:id" element={<ProjectDetail />} />
+      <Navbar  projects={projects}  setprojects={setProjects}/>
+      <SecondNavbar />    
+      <Route path="/projects" element={<ProjectList  projects={projects}/>}></Route> 
+      <Route path="/added" element={<Added />} />
+      <SecondNavbar onCategorySelect={handleCategorySelect} />
+      <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/dashboard" /> : <Navigate to="/home" /> : <Login />} />
+        <Route
+          path="/"
+          element={
+            <>
+              {projects.length > 0 && <Herosection projects={projects} />}
+              <ProjectList projects={projects} setSelected={setSelected} filProjects={filteredProjects} /> </>} />
+        <Route
+          path="/ProjetDetail"
+          element={<ProjectDetail project={selected}  />}
+        />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
         <Route path="/home" element={<ProtectedRoute u={user} role="user"><Home /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute u={user} role="admin"><Dashboard /></ProtectedRoute>} />
       </Routes>
-
       <Footer />
     </BrowserRouter>
   );

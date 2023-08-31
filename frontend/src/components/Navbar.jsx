@@ -9,6 +9,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
+import { Button } from 'bootstrap';
+import { Button } from '@mui/material';
 
 
 
@@ -58,9 +60,20 @@ function Navbar(props) {
     const [query, setQuery] = useState('');
 
   const handleSearch = (e) => {
-    setQuery(e.target.value);
-    props.onSearch(e.target.value);
+    var x = e.target.value
+    setQuery(x);
+   console.log(x);
   };
+const searchedPorject= ()=>{
+ const filtered=props.projects.filter((e)=>{
+  console.log("el",e);
+    return e.title.toLowerCase().includes(query.toLowerCase()) || 
+      e.categories.toLowerCase().includes(query.toLowerCase())
+ })
+  
+   props.setprojects(filtered)
+   console.log("projects",props.projects );
+  }
 
 
   return (
@@ -74,7 +87,7 @@ function Navbar(props) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            
           </IconButton>
           <Typography
             variant="h6"
@@ -93,9 +106,23 @@ function Navbar(props) {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={query}
-              onChange={handleSearch}
+              onChange={(e)=>{
+                setQuery(e.target.value);                
+              }}
             />
+            <button onClick={()=>{
+              searchedPorject(query)
+            }}></button>
           </Search>
+          <Button
+    variant="contained"
+    color="primary"
+    onClick={() => {
+      // Add your logic for starting a project here
+    }}
+  >
+    Start a Project
+  </Button>
         </Toolbar>
       </AppBar>
     </Box>

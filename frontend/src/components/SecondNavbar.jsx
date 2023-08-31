@@ -13,10 +13,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Games', 'Movies', 'Books','Tech','Designs',];
+const pages = ['games', 'movies', 'books','Tech','Designs',];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function SecondNavbar() {
+function SecondNavbar({ onCategorySelect }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,7 +44,6 @@ function SecondNavbar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -99,7 +98,6 @@ function SecondNavbar() {
             variant="h5"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -114,7 +112,7 @@ function SecondNavbar() {
             logo
           </Typography>
           
-          <Box
+          {/* <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
@@ -130,39 +128,33 @@ function SecondNavbar() {
                 {page}
               </Button>
             ))}
-          </Box>
+          </Box> */}
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-            
-          </Box>
+<Box
+  sx={{
+    flexGrow: 1,
+    display: { xs: "none", md: "flex" },
+    justifyContent: "center",
+  }}
+>
+  <Button
+    key="All"
+    onClick={() => onCategorySelect(null)} // Show all projects
+    sx={{ my: 2, color: "white", display: "block" }}
+  >
+    All
+  </Button>
+  {pages.map((page) => (
+    <Button
+      key={page}
+      onClick={() => onCategorySelect(page)}
+      sx={{ my: 2, color: "white", display: "block" }}
+    >
+      {page}
+    </Button>
+  ))}
+</Box>
+
         </Toolbar>
       </Container>
     </AppBar>
