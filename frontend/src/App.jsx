@@ -40,7 +40,7 @@ function App() {
 
   const handleCategorySelect = (category) => {
     setSearchQuery('');
-    setSelectedProject(null);
+    setSelected(null); // Change this line to setSelected(null);
 
     const newFilteredProjects = category
       ? projects.filter((project) => project.categories === category)
@@ -91,7 +91,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar handleSearch={handleSearch} />
-      <SecondNavbar />
+      <SecondNavbar onCategorySelect={handleCategorySelect}/>
 
       <Routes>
         <Route path="/projects" element={<ProjectList projects={projects} />} />
