@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route ,Navigate } from 'react-router-dom';
+import React, { useState ,useEffect} from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SecondNavbar from './components/SecondNavbar';
 import Home from './components/Home';
@@ -7,93 +7,68 @@ import ProjectList from "./components/projectList.jsx"
 import ProjectDetail from './components/ProjectDetail';
 import axios from 'axios';
 import Footer from './components/Footer';
-import Dashboard from './components/admin/dashboard.jsx';
 import SearchOne from './components/SearchOne';
-import Login from './components/login.jsx';
+import Login from './components/login';
+import Dashboard from "./components/Dashboard.jsx";
+import Cookies from 'js-cookie';
 
 function App() {
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
-
+  const [load,setLoad] =useState(true)
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/project/get')
-      .then((response) => {
-        setProjects(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
+
+  const fetchUser = async () => {
+    setLoad(true)
+    try {
+      const response = await fetch('http://localhost:4000/api/users/current', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
       });
-  }, []);
 
-  // Callback function to receive data from ProjectList
-  const handleProjectSelect = (project) => {
-    setSelectedProject(project);
-  };
-
-  const isAuthenticated = localStorage.getItem('token') !== true;
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('URL_TO_FETCH_USER_DATA', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      if (response.ok) {
+        const userData = await response.json();
+        console.log(userData, 'this userData');
+        setUser(userData); // Assuming setUser is a prop received from the parent component
       }
-    };
+      setLoad(false)
 
-    if (localStorage.getItem('token')) {
-      fetchUserData();
+    } catch (error) {
+      setLoad(false)
+      console.error('Error fetching user data:', error);
     }
+  };
+    fetchUser();
   }, []);
 
-  const stalSearch = (str) => {
-    setSearchQuery(str);
+  const ProtectedRoute = ({ u, role, children }) => {
+    console.log (!load);
+    if (!load && (!u || u.role !== role)) {
+      return <Navigate to="/login" />;
+    }
+    return children;
   };
-
-  const navigateTo = (path) => {
-    // Implement your navigation logic here, e.g., window.location.href = path;
+  
+  const handleSearch = (str) => {
+    setSearchQuery(str);
   };
 
   return (
     <BrowserRouter>
-      <Navbar stal={stalSearch}  />
+      <Navbar handleSearch={handleSearch} />
       <SecondNavbar />
-      <ProjectList  projects={projects}/>
+      <ProjectList projects={projects} />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/detail/:id"
-          element={<ProjectDetail project={selectedProject} />}
-        />
+        <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/dashboard" /> : <Navigate to="/home" /> : <Login />} />
+        <Route path="/detail/:id" element={<ProjectDetail />} />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
-
-        {/* ProtectedRoute for Home */}
-        <Route
-          path="/home"
-          element={<Home user={user} navigateTo={navigateTo} />}
-        />
-
-        {/* Admin Dashboard route */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            user?.role === 'admin' ? <Dashboard /> : <Navigate to="/login" />
-          }
-        />
+        <Route path="/home" element={<ProtectedRoute u={user} role="user"><Home /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute u={user} role="admin"><Dashboard /></ProtectedRoute>} />
       </Routes>
+
       <Footer />
     </BrowserRouter>
   );
