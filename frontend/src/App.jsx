@@ -10,13 +10,15 @@ import Footer from './components/Footer';
 import Dashboard from './components/admin/dashboard.jsx';
 import SearchOne from './components/SearchOne';
 import Login from './components/login.jsx';
+import Added from "./components/Added"
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
-
+  const [refresh, setrefresh] = useState(false)
+  console.log(projects);
   useEffect(() => {
     axios
       .get('http://localhost:4000/api/project/get')
@@ -69,10 +71,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar stal={stalSearch}  />
+      <Navbar  projects={projects}  setprojects={setProjects}/>
       <SecondNavbar />
-      <ProjectList  projects={projects}/>
+    
       <Routes>
+      <Route path="/projects" element={<ProjectList  projects={projects}/>}></Route> 
+      <Route path="/added" element={<Added />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/detail/:id"
@@ -84,7 +88,7 @@ function App() {
         <Route
           path="/home"
           element={<Home user={user} navigateTo={navigateTo} />}
-        />
+        /> 
 
         {/* Admin Dashboard route */}
         <Route

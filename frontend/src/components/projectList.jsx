@@ -30,6 +30,8 @@ const ProjectList = (props) => {
             <p>Start Date: {project['start-date']}</p>
             <p>End Date: {project['end-date']}</p>
             <p>{project.comment}</p>
+            <p>{project.categories}</p>
+
             <button>Donate</button>
           </li>
         ))}
