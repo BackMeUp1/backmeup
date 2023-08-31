@@ -8,7 +8,8 @@ import ProjectDetail from "./components/ProjectDetail";
 import axios from "axios";
 import Footer from "./components/Footer";
 import SearchOne from "./components/SearchOne";
-import Dashboard from "./components/Dashboard.jsx";
+import Dashboard from "./components/admin/Dashboard.jsx";
+import AllProjects from "./components/admin/AllProjects.jsx"
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
@@ -46,7 +47,7 @@ function App() {
 
   const handleCategorySelect = (category) => {
     setSearchQuery("");
-    setSelected(null); // Change this line to setSelected(null);
+    setSelected(null);
 
     const newFilteredProjects = category
       ? projects.filter((project) => project.categories === category)
@@ -124,15 +125,14 @@ const reload =()=>{
 
       <Routes>
         <Route
+
           path="/projects"
           element={
             <ProjectList
               projects={projects}
               setSelected={setSelected}
               filProjects={filteredProjects}
-            />
-          }
-        />
+            /> }  />
 
         <Route
           path="/added"
@@ -147,13 +147,11 @@ const reload =()=>{
           element={
             isAuthenticated ? (
               user?.role === "admin" ? (
-                <Navigate to="/dashboard" />
+                <Navigate to="/admin/Dashboard" />
               ) : (
-                <Navigate to="/" />
-              )
+                <Navigate to="/" /> )
             ) : (
-              <Login />
-            )
+              <Login />)
           }
         />
         <Route
@@ -183,14 +181,18 @@ const reload =()=>{
         />
         
         <Route
-          path="/dashboard"
+          path="/admin/Dashboard"
           element={
             <ProtectedRoute role="admin">
-              <Dashboard />
+              <Dashboard projects={projects} />
             </ProtectedRoute>
           }
         />
+        <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
+              <AllProjects projects={projects} />
+            </ProtectedRoute>}/>
         <Route path="/contact" element={<ContactUs />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>
