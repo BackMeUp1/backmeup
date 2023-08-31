@@ -103,9 +103,16 @@ function App() {
       <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
-        <Route path="/projects" element={<ProjectList  projects={projects}
-                  setSelected={setSelected}
-                  filProjects={filteredProjects}/>} />
+        <Route
+          path="/projects"
+          element={
+            <ProjectList
+              projects={projects}
+              setSelected={setSelected}
+              filProjects={filteredProjects}
+            />
+          }
+        />
         <Route
           path="/added"
           element={
@@ -133,7 +140,7 @@ function App() {
           element={
             <>
               <ProtectedRoute role="user">
-                <Home />
+                <Home projects={projects}/>
               </ProtectedRoute>
             </>
           }
