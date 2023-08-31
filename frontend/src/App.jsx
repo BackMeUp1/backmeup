@@ -34,13 +34,12 @@ function App() {
       });
   }, []);
 
-
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
   };
 
   const handleCategorySelect = (category) => {
-    setSearchQuery('');
+    setSearchQuery("");
     setSelected(null); // Change this line to setSelected(null);
 
     const newFilteredProjects = category
@@ -101,13 +100,20 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar handleSearch={handleSearch} />
-      <SecondNavbar onCategorySelect={handleCategorySelect}/>
+      <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
-        <Route path="/projects" element={<ProjectList projects={projects} />} />
-        <Route path="/added" element={<ProtectedRoute role="user">
+        <Route path="/projects" element={<ProjectList  projects={projects}
+                  setSelected={setSelected}
+                  filProjects={filteredProjects}/>} />
+        <Route
+          path="/added"
+          element={
+            <ProtectedRoute role="user">
               <Added />
-            </ProtectedRoute>} />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -127,8 +133,7 @@ function App() {
           element={
             <>
               <ProtectedRoute role="user">
-                <Home
-                />
+                <Home />
               </ProtectedRoute>
             </>
           }

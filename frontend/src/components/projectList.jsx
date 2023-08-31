@@ -16,7 +16,7 @@ const ProjectList = (props) => {
     setSelected(project);
     navigate('/ProjetDetail');
   };
-  const projectsToRender = filProjects.length > 0 ? filProjects : projects;
+  const projectsToRender = filProjects && filProjects.length > 0 ? filProjects : projects;
   return (
     <div className="list">
       <ul>
