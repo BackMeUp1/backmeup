@@ -10,15 +10,17 @@ import Footer from './components/Footer';
 import Dashboard from './components/admin/dashboard.jsx';
 import SearchOne from './components/SearchOne';
 import Login from './components/login.jsx';
+import Added from "./components/Added"
 import Herosection from './components/Herosection'
 function App() {
   const [projects, setProjects] = useState([]);
  
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
+  const [refresh, setrefresh] = useState(false)
+  console.log(projects);
   const [selected, setSelected] = useState({});
   const [filteredProjects, setFilteredProjects] = useState([]);
-
   useEffect(() => {
     axios
       .get('http://localhost:4000/api/project/get')
@@ -85,16 +87,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar stal={stalSearch}  />
-      <SecondNavbar />
+      <Navbar  projects={projects}  setprojects={setProjects}/>
+      <SecondNavbar />    
+      <Routes>
+      <Route path="/projects" element={<ProjectList  projects={projects}/>}></Route> 
+      <Route path="/added" element={<Added />} />
             <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <ProjectList path="/ProjectList"  projects={projects} filProjects={filteredProjects}/>
       <Routes>
-     {/* <Route path="/" element= { <ProjectList  projects={projects} setSelected={setSelected}/>} /> */}
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/" element= {<Herosection projects={projects} />} /> */}
-
         <Route
           path="/"
           element={
@@ -115,7 +117,7 @@ function App() {
         <Route
           path="/home"
           element={<Home user={user} navigateTo={navigateTo} />}
-        />
+        /> 
 
         {/* Admin Dashboard route */}
         <Route
