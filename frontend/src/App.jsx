@@ -16,6 +16,7 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(null);
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
     axios
@@ -32,6 +33,20 @@ function App() {
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
   };
+
+
+  const handleCategorySelect = (category) => {
+    setSearchQuery(''); // Clear search query when changing categories
+    setSelectedProject(null); // Clear selected project
+  
+    // Filter projects based on the selected category
+    const newFilteredProjects = category
+      ? projects.filter((project) => project.categories === category)
+      : projects;
+  
+    setFilteredProjects(newFilteredProjects);
+  };
+
 
   const isAuthenticated = localStorage.getItem('token') !== true;
 
@@ -70,8 +85,9 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar stal={stalSearch}  />
-      <SecondNavbar />
-      <ProjectList  projects={projects}/>
+      <SecondNavbar onCategorySelect={handleCategorySelect} />
+
+      <ProjectList path="/ProjectList"  projects={projects} filProjects={filteredProjects}/>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
