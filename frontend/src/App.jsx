@@ -34,6 +34,22 @@ function App() {
       });
   }, []);
 
+
+  const handleProjectSelect = (project) => {
+    setSelectedProject(project);
+  };
+
+  const handleCategorySelect = (category) => {
+    setSearchQuery('');
+    setSelected(null); // Change this line to setSelected(null);
+
+    const newFilteredProjects = category
+      ? projects.filter((project) => project.categories === category)
+      : projects;
+
+    setFilteredProjects(newFilteredProjects);
+  };
+
   const isAuthenticated = localStorage.getItem("token") == !true;
 
   useEffect(() => {
@@ -85,7 +101,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar handleSearch={handleSearch} />
-      <SecondNavbar />
+      <SecondNavbar onCategorySelect={handleCategorySelect}/>
 
       <Routes>
         <Route path="/projects" element={<ProjectList projects={projects} />} />

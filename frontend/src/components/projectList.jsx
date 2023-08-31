@@ -11,10 +11,11 @@ const ProjectList = (props) => {
   const { projects, setSelected ,filProjects, onProjectSelect } = props;
   
   
+
   const handleImageClick = (project) => {
     setSelected(project);
+    navigate('/ProjetDetail');
   };
-  
   const projectsToRender = filProjects.length > 0 ? filProjects : projects;
   return (
     <div className="list">
