@@ -123,10 +123,17 @@ const reload =()=>{
       <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
-        <Route path="/projects" element={<ProjectList 
-                  projects={projects}
-                  setSelected={setSelected}
-                 />} />
+        <Route
+          path="/projects"
+          element={
+            <ProjectList
+              projects={projects}
+              setSelected={setSelected}
+              filProjects={filteredProjects}
+            />
+          }
+        />
+
         <Route
           path="/added"
           element={
@@ -154,7 +161,7 @@ const reload =()=>{
           element={
             <>
               <ProtectedRoute role="user">
-                <Home />
+                <Home projects={projects}/>
               </ProtectedRoute>
             </>
           }

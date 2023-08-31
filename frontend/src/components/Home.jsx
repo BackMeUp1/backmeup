@@ -1,98 +1,59 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import "./Home.css"; // Import the separate CSS file
 
-export default function Home() {
-  const sectionStyle = {
-    backgroundColor: "#f0f0f0",
-    padding: "10px",
-    marginTop: "50px",
-    fontSize: "20px",
-    height: "150px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  };
+export default function Home({ projects }) {
+  const totalProjects = projects.length;
+  const totalAmountCollected = projects.reduce(
+    (total, project) => total + parseFloat(project.current_amount),
+    0
+  );
+  const totalBackers = projects.reduce(
+    (total, project) => total + project.backers,
+    0
+  );
 
-  const heroSectionStyle = {
-    backgroundColor: "#333",
-    color: "#fff",
-    padding: "50px 0",
-    textAlign: "center",
-  };
+  const featuredProject = projects.reduce((maxProject, project) =>
+    parseFloat(project.current_amount) > parseFloat(maxProject.current_amount) ? project : maxProject
+  );
 
-  const heroImageStyle = {
-    maxWidth: "100%",
-    height: "auto",
-    borderRadius: "50%",
-  };
-
-  const projectHighlightStyle = {
-    marginBottom: "110px",
-    fontSize: "24px",
-    fontWeight: "bold",
-  };
-
-  const otherProjectsStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    
-  };
-
-  const otherProjectItemStyle = {
-    marginTop: "5px",
-    fontSize: "18px",
-    marginBottom:"1px"
-  };
+  const someProjects = projects.slice(0, 3); // You can adjust the number as needed
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Paper elevation={0} style={sectionStyle}>
-          Section 1
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Paper>
-      </Grid>
-      <Grid item xs={4}>
-        <Paper elevation={0} style={sectionStyle}>
-          Section 2
-          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </Paper>
-      </Grid>
-      <Grid item xs={4}>
-        <Paper elevation={0} style={sectionStyle}>
-          Section 3
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-        </Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper elevation={0} style={heroSectionStyle}>
-          <img
-            src="path-to-your-image.jpg"
-            alt="Project Image"
-            style={heroImageStyle}
-          />
-          <Typography variant="body1" style={projectHighlightStyle}>
-            Your Kickstarter project highlight goes here.
-          </Typography>
-        </Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper elevation={0} style={{ ...heroSectionStyle, ...otherProjectsStyle }}>
-          <Typography variant="h5">Other Projects</Typography>
-          <div style={otherProjectItemStyle}>
-            <p>Other Project 1</p>
+    <div className="container">
+      <div className="stats-container">
+        <h4>Statistics</h4>
+        <div className="stat">
+          <h6>Total Projects</h6>
+          <p>{totalProjects}</p>
+        </div>
+        <div className="stat">
+          <h6>Total Amount Collected</h6>
+          <p>${totalAmountCollected.toFixed(2)}</p>
+        </div>
+        <div className="stat">
+          <h6>Total Backers</h6>
+          <p>{totalBackers}</p>
+        </div>
+      </div>
+      <div className="project-highlight">
+        <img
+          src={featuredProject.image}
+          alt="Featured Project"
+        />
+        <h4>Featured Project</h4>
+        <p>{featuredProject.title}</p>
+      </div>
+      <div className="other-projects">
+        <h4>Other Projects</h4>
+        {someProjects.map((project, index) => (
+          <div className="other-project-item" key={index}>
+            <h5>{project.title}</h5>
+            <p>{project.description}</p>
+            <p>${project.current_amount}</p>
+            <img src={project.image} alt="" />
           </div>
-          <div style={otherProjectItemStyle}>
-            <p>Other Project 2</p>
-          </div>
-          <div style={otherProjectItemStyle}>
-            <p>Other Project 3</p>
-          </div>
-        </Paper>
-      </Grid>
-    </Grid>
+        ))}
+      </div>
+    </div>
   );
 }
-
