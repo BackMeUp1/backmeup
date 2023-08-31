@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 const ProjectList = (props) => {
+  
   const navigate = useNavigate();
   const { projects, setSelected ,filProjects,  } = props;
   
@@ -19,6 +20,7 @@ const ProjectList = (props) => {
   const projectsToRender = filProjects && filProjects.length > 0 ? filProjects : projects;
   return (
     <div className="list">
+   
       <ul>
         {projectsToRender.map((project, index) => (
           <li key={index}>
@@ -30,6 +32,7 @@ const ProjectList = (props) => {
                   setSelected(project);
                   navigate('/ProjectDetail')
                 }}
+               
               />
             
             <h3>{project.title}</h3>
