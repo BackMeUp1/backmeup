@@ -7,7 +7,7 @@ const ModalComponent = (props) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [title,setTitle]= useState("")
   const [description,setDescription]= useState("")
-  const [image,setImage]= useState("")
+  
   const [goal_amount,setGoal_amount]= useState("")
 
   const [startDate,setStartDate]= useState("")
@@ -15,6 +15,36 @@ const ModalComponent = (props) => {
   const [categories,setCategorie]= useState("")
   const [endDate,setEndDate]= useState("")
  const [ comment,setComment]= useState("")
+
+ const presetKey="khouloud"
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  console.log(imageUrl);
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const uploadImage = async () => {
+    const form = new FormData();
+    form.append("file", file);
+    form.append("upload_preset", presetKey );
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/dp4k4aemx/image/upload`,
+        form
+      );
+      setImageUrl(response.data.secure_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
+
+
+
+
 
  const handladd = () => {
     
@@ -50,9 +80,7 @@ const ModalComponent = (props) => {
   const Handeltitle = (e)=>{
     setTitle(e.target.value)
 }
-const handleImage =(e)=>{
-  setImage(e.target.value)
-}
+
 
 const handleDescription =(e)=>{
     setDescription(e.target.value)
@@ -114,7 +142,14 @@ const handlcategories =(e)=>{
              
             <div className="input input--image">
             <label className="input__label">Image</label>
-            <input className="input__field input__field--image" type="file" onChange={(e)=>handleImage(e)} />
+            <input className="input__field input__field--image" type="file" onChange={handleFile} />
+            <button onClick={uploadImage}>add image</button>
+            
+            
+            {imageUrl && (
+       
+       <img src={imageUrl} alt="Uploaded" style={{maxWidth:"100%"}} />
+         )}
           </div>
 
           </div>
