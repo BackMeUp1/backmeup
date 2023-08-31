@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchOne from './SearchOne';
+import { Button } from '@mui/material';
 
 
 
@@ -74,7 +75,7 @@ function Navbar(props) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            
           </IconButton>
           <Typography
             variant="h6"
@@ -96,6 +97,15 @@ function Navbar(props) {
               onChange={handleSearch}
             />
           </Search>
+          <Button
+    variant="contained"
+    color="primary"
+    onClick={() => {
+      // Add your logic for starting a project here
+    }}
+  >
+    Start a Project
+  </Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,23 +1,23 @@
 
 import React from 'react';
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import './ProjectList.css'
 import { useNavigate } from 'react-router-dom'
 
 const ProjectList = (props) => {
   const navigate = useNavigate();
-  const { projects, setSelected } = props;
-console.log(props);
+  const { projects, setSelected ,filProjects, onProjectSelect } = props;
+import { useState } from "react";
   const handleImageClick = (project) => {
     setSelected(project);
     console.log(project);
   };
-  
-
+  const projectsToRender = filProjects.length > 0 ? filProjects : projects;
   return (
     <div className="list">
       <ul>
-        {projects.map((project, index) => (
+        {projectsToRender.map((project, index) => (
           <li key={index}>
            
               <img
@@ -36,6 +36,7 @@ console.log(props);
             <p>Start Date: {project['start-date']}</p>
             <p>End Date: {project['end-date']}</p>
             <p>{project.comment}</p>
+            <p>Category: {project.categories}</p>
             <button>Donate</button>
           </li>
         ))}
