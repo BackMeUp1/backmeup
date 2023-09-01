@@ -1,0 +1,15 @@
+
+  
+  .project-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* Add additional styles for the project cards container */
+  }
+  
+  .project-card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    /* Add additional styles for each project card */
+  }

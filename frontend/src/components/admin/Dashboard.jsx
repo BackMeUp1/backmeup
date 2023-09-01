@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import './AdminDashboard.css';
 import AllProject from './AllProjects.jsx';
+import UserList from './userList';
 
 
 const AdminDashboard = (props) => {
@@ -15,7 +16,7 @@ const AdminDashboard = (props) => {
             <Link to="/admin/All-project">All Project</Link>
           </li>
           <li>
-            <Link to="/admin/projects">Projects</Link>
+            <Link to="/admin/users">User </Link>
           </li>
           <li>
             <Link to="/admin/list">Demande</Link>
@@ -25,7 +26,7 @@ const AdminDashboard = (props) => {
       <div className="content">
         <Routes>
           <Route path="/admin/All-project" element={<AllProject projects/>} />
-          <Route path="/admin/projects" element={<ProjectList />} />
+          <Route path="/admin/users" element={<UserList />} />
           <Route path="/admin/list" element={<DemandeList />} />
         </Routes>
       </div>

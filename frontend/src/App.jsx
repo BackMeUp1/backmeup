@@ -9,7 +9,8 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import SearchOne from "./components/SearchOne";
 import Dashboard from "./components/admin/Dashboard.jsx";
-import AllProjects from "./components/admin/AllProjects.jsx"
+import AllProjects from "./components/admin/AllProjects.jsx";
+import UserList from "./components/admin/userList.jsx"
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
@@ -57,11 +58,11 @@ function App() {
     setFilteredProjects(newFilteredProjects);
   };
 
-  const isAuthenticated = localStorage.getItem("token") == !true;
+  const isAuthenticated = Cookies.get("token")
 
   useEffect(() => {
     const fetchUser = async () => {
-      setLoad(true);
+     setLoad(true);
       try {
         const response = await fetch(
           "http://localhost:4000/api/users/current",
@@ -72,7 +73,7 @@ function App() {
             },
           }
         );
-
+  
         if (response.ok) {
           const userData = await response.json();
           console.log(userData, "this userData");
@@ -80,7 +81,7 @@ function App() {
         }
         setLoad(false);
       } catch (error) {
-        setLoad(false);
+        // setLoad(false);
         console.error("Error fetching user data:", error);
       }
     };
@@ -101,7 +102,7 @@ else setProjects(projects.filter((e) => {
 
   const ProtectedRoute = ({ role, children }) => {
     console.log(!load);
-    if (!load) {
+ if (!load) {
       if (role === "admin" && user?.role === "admin") {
         return children;
       } else if (role === "user" && user?.role === "user") {
@@ -119,9 +120,9 @@ else setProjects(projects.filter((e) => {
 const reload =()=>{
   setrefresh(!refresh)
 }
+
   return (
     <BrowserRouter>
-      <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/>
       <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
@@ -162,6 +163,7 @@ const reload =()=>{
               <ProtectedRoute role="user">
                 <Home projects={projects}/>
               </ProtectedRoute>
+  
             </>
           }
         />
@@ -177,6 +179,7 @@ const reload =()=>{
           element={
             <ProtectedRoute role="user">
               <Home />
+              <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/> 
             </ProtectedRoute>
           }
         />
@@ -192,7 +195,12 @@ const reload =()=>{
         <Route path="/SubmitDonation" element={<SubmitDonation />} />
         <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
               <AllProjects projects={projects} />
-            </ProtectedRoute>}/>
+            </ProtectedRoute>}
+        />
+        <Route path="/admin/users"  element={ <ProtectedRoute role="admin">
+              <UserList/>
+            </ProtectedRoute>}
+        />
         <Route path="/contact" element={<ContactUs />} />
 
       </Routes>

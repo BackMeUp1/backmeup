@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "./AllProject.css"; 
 
 const AllProject = (props) => {
   const [projects, setProjects] = useState([]);
