@@ -14,6 +14,7 @@ import Login from "./components/login.jsx";
 import Added from "./components/Added";
 // import Herosection from './components/Herosection';
 import ContactUs from "./components/ContactUs";
+import SubmitDonation from "./components/SubmitDonation";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -160,6 +161,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/SubmitDonation" element={<SubmitDonation />} />
         <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Footer />
