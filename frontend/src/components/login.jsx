@@ -59,7 +59,7 @@ const Login = () => {
 
         setIsSignedIn(true);
         setUserRole(userRole);
-        navigate(userRole === 'user' ? '/home' : '/dashboard');
+        navigate(userRole === 'user' ? '/home' : '/admin/Dashboard');
       })
       .catch(error => {
         console.error('Error signing in:', error);

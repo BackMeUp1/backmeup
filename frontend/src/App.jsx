@@ -8,10 +8,13 @@ import ProjectDetail from "./components/ProjectDetail";
 import axios from "axios";
 import Footer from "./components/Footer";
 import SearchOne from "./components/SearchOne";
-import Dashboard from "./components/Dashboard.jsx";
+import Dashboard from "./components/admin/Dashboard.jsx";
+import AllProjects from "./components/admin/AllProjects.jsx"
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
+import { filledInputClasses } from "@mui/material";
+
 // import Herosection from './components/Herosection';
 import ContactUs from "./components/ContactUs";
 import SubmitDonation from "./components/SubmitDonation";
@@ -30,11 +33,14 @@ function App() {
       .get("http://localhost:4000/api/project/get")
       .then((response) => {
         setProjects(response.data);
+        
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [refresh]);
+
+
 
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
@@ -42,7 +48,7 @@ function App() {
 
   const handleCategorySelect = (category) => {
     setSearchQuery("");
-    setSelected(null); // Change this line to setSelected(null);
+    setSelected(null);
 
     const newFilteredProjects = category
       ? projects.filter((project) => project.categories === category)
@@ -81,6 +87,18 @@ function App() {
     fetchUser();
   }, []);
 
+const projectList =(query)=>{
+if (!query){
+  setrefresh(!refresh)
+}
+else setProjects(projects.filter((e) => {
+  console.log("el", e);
+  return (
+    e.title.toLowerCase().includes(query.toLowerCase()) ||
+    e.categories.toLowerCase().includes(query.toLowerCase())
+  );}))
+}
+
   const ProtectedRoute = ({ role, children }) => {
     console.log(!load);
     if (!load) {
@@ -98,16 +116,25 @@ function App() {
   const handleSearch = (str) => {
     setSearchQuery(str);
   };
-
+const reload =()=>{
+  setrefresh(!refresh)
+}
   return (
     <BrowserRouter>
-      <Navbar handleSearch={handleSearch} />
+      <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/>
       <SecondNavbar onCategorySelect={handleCategorySelect} />
 
       <Routes>
-        <Route path="/projects" element={<ProjectList  projects={projects}
-                  setSelected={setSelected}
-                  filProjects={filteredProjects}/>} />
+        <Route
+
+          path="/projects"
+          element={
+            <ProjectList
+              projects={projects}
+              setSelected={setSelected}
+              filProjects={filteredProjects}
+            /> }  />
+
         <Route
           path="/added"
           element={
@@ -121,13 +148,11 @@ function App() {
           element={
             isAuthenticated ? (
               user?.role === "admin" ? (
-                <Navigate to="/dashboard" />
+                <Navigate to="/admin/Dashboard" />
               ) : (
-                <Navigate to="/" />
-              )
+                <Navigate to="/" /> )
             ) : (
-              <Login />
-            )
+              <Login />)
           }
         />
         <Route
@@ -135,7 +160,7 @@ function App() {
           element={
             <>
               <ProtectedRoute role="user">
-                <Home />
+                <Home projects={projects}/>
               </ProtectedRoute>
             </>
           }
@@ -145,7 +170,9 @@ function App() {
           element={<ProjectDetail project={selected} />}
         />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
+        
         <Route
+        
           path="/x"
           element={
             <ProtectedRoute role="user">
@@ -153,16 +180,21 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
         <Route
-          path="/dashboard"
+          path="/admin/Dashboard"
           element={
             <ProtectedRoute role="admin">
-              <Dashboard />
+              <Dashboard projects={projects} />
             </ProtectedRoute>
           }
         />
         <Route path="/SubmitDonation" element={<SubmitDonation />} />
+        <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
+              <AllProjects projects={projects} />
+            </ProtectedRoute>}/>
         <Route path="/contact" element={<ContactUs />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>
