@@ -1,4 +1,4 @@
-const {add ,getAll,putProject,remove} = require("../model/projects")
+const {add ,getAll,putProject,remove,getPermission,putProjectPermission} = require("../model/projects")
 const addProject = (req, res) => {
   const ProjectData = req.body; 
   
@@ -11,11 +11,20 @@ const addProject = (req, res) => {
     }
   });
 };
+
+const getZero = (req, res) => {
+  getPermission((err,results)=>{
+  err ? res.status(500).json(err) : res.status(200).json(results)
+  })
+  };
+
+
 const getProject = (req, res) => {
   getAll((err,results)=>{
   err ? res.status(500).json(err) : res.status(200).json(results)
   })
   };
+
   const UpdateProject = (req, res) => {
     const {id}=req.params
     const updatedData = req.body;
@@ -24,6 +33,16 @@ const getProject = (req, res) => {
       else res.json(results);
     });
   };
+
+  const UpdateProjectPermission = (req, res) => {
+    const {id}=req.params
+    const updatedData = req.body;
+    putProjectPermission(id, updatedData, function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  };
+
   const RemoveProject = (req, res) => {
     const id = req.params.id;
   
@@ -87,5 +106,7 @@ module.exports ={
   addProject,
   getProject,
   UpdateProject,
-  RemoveProject
+  RemoveProject,
+  getZero,
+  UpdateProjectPermission
 }

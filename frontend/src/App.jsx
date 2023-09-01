@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import SearchOne from "./components/SearchOne";
 import Dashboard from "./components/admin/Dashboard.jsx";
 import AllProjects from "./components/admin/AllProjects.jsx"
+import Demande from "./components/admin/Demande";
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
@@ -26,6 +27,22 @@ function App() {
   const [selected, setSelected] = useState({});
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [load, setLoad] = useState(true);
+  const [adino,setAdino]=useState({})
+
+  const ading=()=>{
+    setAdino({
+      title,
+      description,
+      goal_amount,
+      current_amount,
+      is_approved,
+      startDate,
+      endDate,
+      comment,
+      image,
+      categories
+  })
+   }
 
   useEffect(() => {
     axios
@@ -138,7 +155,7 @@ const reload =()=>{
           path="/added"
           element={
             <ProtectedRoute role="user">
-              <Added />
+              <Added  ading={ading}  refresh={refresh} setrefresh={setrefresh}/>
             </ProtectedRoute>
           }
         />
@@ -190,6 +207,10 @@ const reload =()=>{
         />
         <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
               <AllProjects projects={projects} />
+            </ProtectedRoute>}/>
+
+            <Route path="/admin/Demande"  element={ <ProtectedRoute role="admin">
+              <Demande projects={projects} />
             </ProtectedRoute>}/>
         <Route path="/contact" element={<ContactUs />} />
 

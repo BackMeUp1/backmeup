@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import './AdminDashboard.css';
 import AllProject from './AllProjects.jsx';
+import Demande from "./Demande"
 
 
 const AdminDashboard = (props) => {
@@ -18,7 +19,7 @@ const AdminDashboard = (props) => {
             <Link to="/admin/projects">Projects</Link>
           </li>
           <li>
-            <Link to="/admin/list">Demande</Link>
+            <Link to="/admin/Demande">Demande</Link>
           </li>
         </ul>
       </div>
@@ -26,7 +27,7 @@ const AdminDashboard = (props) => {
         <Routes>
           <Route path="/admin/All-project" element={<AllProject projects/>} />
           <Route path="/admin/projects" element={<ProjectList />} />
-          <Route path="/admin/list" element={<DemandeList />} />
+          <Route path="/admin/list" element={<Demande />} />
         </Routes>
       </div>
     </div>
@@ -45,15 +46,6 @@ const ProjectList = () => {
   );
 };
 
-const DemandeList = () => {
-  // Implement the component logic for displaying the list of demands
-  // This component will fetch the demand data from the API and render it
-  return (
-    <div>
-      <h2>Demande List</h2>
-      <p>List of demands goes here.</p>
-    </div>
-  );
-};
+
 
 export default AdminDashboard;

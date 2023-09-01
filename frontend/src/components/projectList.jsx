@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 const ProjectList = (props) => {
   
   const navigate = useNavigate();
-  const { projects, setSelected ,filProjects,  } = props;
+  const { projects, setSelected ,filProjects   } = props;
   
   
 
