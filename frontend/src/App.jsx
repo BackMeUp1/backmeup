@@ -217,8 +217,6 @@ const reload =()=>{
             <Route path="/admin/Demande"  element={ <ProtectedRoute role="admin">
               <Demande projects={projects} />
             </ProtectedRoute>}/>
-            </ProtectedRoute>}
-        />
         <Route path="/admin/users"  element={ <ProtectedRoute role="admin">
               <UserList/>
             </ProtectedRoute>}
