@@ -8,6 +8,13 @@ const add = (ProjectData, callback) => {
   });
 };
   
+const getPermission=(ProjectData, callback)=>{
+  const sql = 'SELECT * FROM projects WHERE is_approved = 0';
+   connection.query(sql, ProjectData, function (error, results) {
+    callback(error, results);
+  });
+
+}
   const getAll = (callback) => {
     const sql = 'SELECT * FROM `projects`'
     connection.query(sql,function (error,results){
@@ -21,6 +28,15 @@ const putProject = (idprojects, updatedData, callback) => {
       callback(error, results);
   });
 };
+
+
+const putProjectPermission = (idprojects, updatedData, callback) => {
+  const sql = `UPDATE projects SET is_approved = ? WHERE idprojects = ?`;
+connection.query(sql, [updatedData, idprojects], function(error, results) {
+      callback(error, results);
+  });
+};
+
 const remove = (projectid, callback) => {
   const sql = `DELETE FROM projects WHERE idprojects = ?`;
   connection.query(sql, [projectid], function(error, results) {
@@ -31,5 +47,7 @@ const remove = (projectid, callback) => {
     add,
     getAll,
     putProject,
-    remove
+    remove,
+    getPermission,
+    putProjectPermission
   }

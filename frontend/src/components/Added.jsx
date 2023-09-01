@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from "axios"
 import './ModalComponent.css'; 
-
+import { useNavigate } from 'react-router';
 const ModalComponent = (props) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [title,setTitle]= useState("")
   const [description,setDescription]= useState("")
   
   const [goal_amount,setGoal_amount]= useState("")
-
+const [current_amount,setCurrent]=useState(0)
   const [startDate,setStartDate]= useState("")
  
   const [categories,setCategorie]= useState("")
   const [endDate,setEndDate]= useState("")
  const [ comment,setComment]= useState("")
-
+const [iduser,setId]=useState(8)
+const navigate=useNavigate()
  const presetKey="khouloud"
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -58,19 +59,23 @@ const ModalComponent = (props) => {
       if (result.isConfirmed) {
         
         axios.post("http://localhost:4000/api/project/add", {
-          title,
-          description,
-          goal_amount,
-          current_amount,
-          is_approved,
-          startDate,
-          endDate,
-          comment,
-          image,
-          categories
-        }).then((res) => {
+          title:title,
+          description:description,
+          goal_amount:goal_amount,
+          current_amount:0,
+          is_approved:0,
+          "start-date":startDate,
+          "end-date": endDate,
+          comment:comment,
+          image: imageUrl,
+          categories:categories,
+          users_iduser:iduser
+
+        })
+        .then((res) => {
           console.log(res.data);
-          window.location.reload();
+          window.location.reload() 
+          
         }).catch((err) => console.log(err));
       }
     });
@@ -108,6 +113,9 @@ const handlcategories =(e)=>{
     setComment(e.target.value)
   }
   
+
+
+
   return (
     <div className="container">
       <div className="modal">
@@ -128,7 +136,7 @@ const handlcategories =(e)=>{
         <div className="modal__body">
           <div className="input">
             <label className="input__label">Project title</label>
-            <input className="input__field" type="text" onChange={(e)=>Handeltitle(e)} />
+            <input className="input__field" type="text" onChange={(e)=>setTitle(e.target.value)} />
             <p className="input__description">
               The title must contain a maximum of 32 characters
             </p>
@@ -170,7 +178,7 @@ const handlcategories =(e)=>{
             <textarea className="input__field input__field--textarea"  onChange={(e)=>handlComment(e)}></textarea>
           </div>
           <div className="input">
-            <label className="input__label">Category</label>
+            <label className="input__label"  onClick={(e)=>{setCategorie(e.target.value)}} >Category</label>
             <div className="category-button-group">
               <button
                 className={`button category-button ${selectedCategory === 'movies' ? 'selected' : ''}`}
@@ -206,9 +214,12 @@ const handlcategories =(e)=>{
           </div>
         </div>
         <div className="modal__footer">
-          <button className="button button--primary" onClick={()=>{
-          handladd ()
-        } } >Create project</button>
+          <button className="button button--primary" onClick={()=>{handladd()
+          navigate("/projects")
+          props.setrefresh(!props.refresh) }}
+         
+        
+     >Create project</button>
         </div>
       </div>
     </div>

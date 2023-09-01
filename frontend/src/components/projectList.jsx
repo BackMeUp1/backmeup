@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const ProjectList = (props) => {
   
   const navigate = useNavigate();
-  const { projects, setSelected, filProjects } = props;
+  const { projects, setSelected ,filProjects   } = props;
+
   
   // Create an array to store the expanded state for each project
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
