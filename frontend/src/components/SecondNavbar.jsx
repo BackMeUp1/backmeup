@@ -1,143 +1,163 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import React, { useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import { Link, useNavigate } from "react-router-dom"; 
+import Cookies from "js-cookie"; 
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from "@mui/icons-material/Search";
 
-const pages = ['games', 'movies', 'books','Tech','Designs',];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ["games", "movies", "books", "Tech", "Designs"];
 
-function SecondNavbar({ onCategorySelect }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function SecondNavbar({ onCategorySelect, handleSearch }) {
+  const isAuthenticated = Cookies.get("token");
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(""); // Add state for search query
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const handleLogOut = () => {
+    Cookies.remove("token");
+    navigate("/login");
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    handleSearch(searchQuery);
   };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
-            
+            Home
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+
+          <Button
+            key="Discover"
+            sx={{ my: 2, color: "white", display: "block" }}
+            component={Link}
+            to="/projects"
           >
-            logo
-          </Typography>
+            Discover
+          </Button>
 
           <Box
-  sx={{
-    flexGrow: 1,
-    display: { xs: "none", md: "flex" },
-    justifyContent: "center",
-  }}
->
-  <Button
-    key="All"
-    onClick={() => onCategorySelect(null)} // Show all projects
-    sx={{ my: 2, color: "white", display: "block" }}
-  >
-    All
-  </Button>
-  {pages.map((page) => (
-    <Button
-      key={page}
-      onClick={() => onCategorySelect(page)}
-      sx={{ my: 2, color: "white", display: "block" }}
-    >
-      {page}
-    </Button>
-  ))}
-</Box>
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              key="All"
+              onClick={() => onCategorySelect(null)}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              All
+            </Button>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={() => onCategorySelect(page)}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
 
+          {/* Search input and button */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            <form onSubmit={handleSearchSubmit}>
+              <InputBase
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                sx={{ mr: 1, color: "white" }}
+              />
+              <Button
+                type="submit"
+                sx={{ color: "white", backgroundColor: "transparent" }}
+              >
+                <SearchIcon />
+              </Button>
+            </form>
+          </Box>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            {!isAuthenticated ? (
+              <Button
+                key="LogIn"
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/login"
+              >
+                Log In
+              </Button>
+            ) : (
+              <>
+                <Button
+                  key="Home"
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  component={Link}
+                  to="/"
+                >
+                  Home
+                </Button>
+                <Button
+                  key="LogOut"
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  onClick={handleLogOut}
+                >
+                  Log Out
+                </Button>
+              </>
+            )}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default SecondNavbar;
