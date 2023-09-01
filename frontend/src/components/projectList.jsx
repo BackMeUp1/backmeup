@@ -76,6 +76,8 @@ const ProjectList = (props) => {
     setExpandedDescriptions(newExpandedDescriptions);
   };
 
+
+
   return (
     <div className="list-container">
       <ul className="project-list">

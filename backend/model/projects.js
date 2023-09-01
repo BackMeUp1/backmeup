@@ -22,6 +22,16 @@ const getPermission=(ProjectData, callback)=>{
   });
 
 }
+
+
+const getPermissionApproved=( callback)=>{
+  const sql = 'SELECT * FROM projects WHERE is_approved = 1';
+   connection.query(sql, function (error, results) {
+    callback(error, results);
+  });
+
+}
+
   const getAll = (callback) => {
     const sql = 'SELECT * FROM `projects`'
     connection.query(sql,function (error,results){
@@ -56,5 +66,6 @@ const remove = (projectid, callback) => {
     putProject,
     remove,
     getPermission,
-    putProjectPermission
+    putProjectPermission,
+    getPermissionApproved
   }
