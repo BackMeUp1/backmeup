@@ -1,6 +1,57 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// const ProjectList = () => {
+//   const [menuView, setMenuView] = useState(false);
+//   const [projects, setProjects] = useState([]); 
+
+//   const toggleMenu = () => {
+//     setMenuView(!menuView);
+//   };
+
+//   useEffect(() => {
+    
+//     axios.get('/api/projects')
+//       .then(response => {
+//         setProjects(response.data); 
+//       })
+//       .catch(error => {
+//         console.error('Error fetching data:', error);
+//       });
+//   }, []);
+
+//   return (
+//     <div>
+//       <span onClick={toggleMenu}>All categories</span>
+//       <ul>
+//         {projects.map((project, index) => (
+//           <li key={index}>
+//             <img src={project.image} alt="image" />
+//             <h3>{project.title}</h3>
+//             <p>{project.description}</p>
+//             <p>Goal: ${project.goal_amount}</p>
+//             <p>Current amount: ${project.current_amount}</p>
+//             <p>Start Date: {project['start-date']}</p>
+//             <p>End Date: {project['end-date']}</p>
+//             <p>{project.comment}</p>
+//             <button>Donate</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default ProjectList;
+
+
+
+
+
 import React, { useState } from 'react';
 import './ProjectList.css';
 import { useNavigate } from 'react-router-dom';
+import Login from './login';
 
 const ProjectList = (props) => {
   
@@ -28,7 +79,9 @@ const ProjectList = (props) => {
   return (
     <div className="list-container">
       <ul className="project-list">
-        {projectsToRender.map((project, index) => (
+        {projectsToRender.map((project, index) => {
+          console.log(project,"here");
+          return(
           <li className="project-item" key={index}>
             <img
               src={project.image}
@@ -61,11 +114,11 @@ const ProjectList = (props) => {
               <p className="project-info">{project.comment}</p>
               <p className="project-info">Category: {project.categories}</p>
               <button className="project-donate-button" onClick={()=>{
-                 navigate('/SubmitDonation');
-              }} >Donate</button>
+                console.log(project,"there");
+                navigate('/SubmitDonation', { state: { project } })}}>Donate</button>
             </div>
           </li>
-        ))}
+        )})}
       </ul>
     </div>
   );

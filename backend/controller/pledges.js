@@ -8,6 +8,7 @@ const getPledges = (req, res) => {
   
   const addPledges = (req, res) => {
     const PledgesData = req.body; 
+    const userId = req.query.userId;
     
     add(PledgesData, (error, results) => {
       if (error) {
