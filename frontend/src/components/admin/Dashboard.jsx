@@ -3,6 +3,7 @@ import { Link, Routes, Route } from 'react-router-dom';
 import './AdminDashboard.css';
 import AllProject from './AllProjects.jsx';
 import Demande from "./Demande"
+import UserList from './userList';
 
 
 const AdminDashboard = (props) => {
@@ -16,7 +17,7 @@ const AdminDashboard = (props) => {
             <Link to="/admin/All-project">All Project</Link>
           </li>
           <li>
-            <Link to="/admin/projects">Projects</Link>
+            <Link to="/admin/users">User </Link>
           </li>
           <li>
             <Link to="/admin/Demande">Demande</Link>
@@ -28,6 +29,7 @@ const AdminDashboard = (props) => {
           <Route path="/admin/All-project" element={<AllProject projects/>} />
           <Route path="/admin/projects" element={<ProjectList />} />
           <Route path="/admin/list" element={<Demande />} />
+          <Route path="/admin/users" element={<UserList />} />
         </Routes>
       </div>
     </div>

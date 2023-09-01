@@ -57,9 +57,10 @@ const Login = () => {
         const userRole = response.data.role;
         Cookies.set('token', token);
 
-        setIsSignedIn(true);
+        // setIsSignedIn(true);
         setUserRole(userRole);
-        navigate(userRole === 'user' ? '/home' : '/admin/Dashboard');
+        navigate(userRole === 'admin' ? '/admin/Dashboard' : "/");
+         window.location.reload()
       })
       .catch(error => {
         console.error('Error signing in:', error);

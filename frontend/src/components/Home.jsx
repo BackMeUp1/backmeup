@@ -16,7 +16,7 @@ export default function Home({ projects }) {
     parseFloat(project.current_amount) > parseFloat(maxProject.current_amount) ? project : maxProject
   );
 
-  const someProjects = projects.slice(0, 3); // You can adjust the number as needed
+  const someProjects = projects.slice(0, 3);
 
   return (
     <div className="container">
