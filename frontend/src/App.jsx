@@ -48,7 +48,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/project/get")
+      .get("http://localhost:4000/api/project/permissionOne")
       .then((response) => {
         setProjects(response.data);
         

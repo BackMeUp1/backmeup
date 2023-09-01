@@ -28,6 +28,16 @@ const AllProject = (props) => {
     .catch((err)=>console.log(err))
   }
 
+  const getPermissionApproved=()=>{
+    axios.get("http://localhost:4000/api/project/permissionOne")
+    .then((res)=>{
+      setProjects(res.data);
+    })
+    .catch((err)=>console.log(err))
+  }
+
+
+
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:4000/api/project/${id}`)
@@ -43,7 +53,7 @@ const AllProject = (props) => {
   return (
     <div>
       <div>
-      <button type='button'  >approved</button>
+      <button type='button' onClick={getPermissionApproved} >approved</button>
       <button type='button' onClick={getPermission}>not approved</button>
       </div>
       <h2>All Projects</h2>
