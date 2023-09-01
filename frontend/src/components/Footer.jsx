@@ -18,6 +18,7 @@ const Footer = () => {
     color: "#fff",
     padding: "5px 0", // Adjust padding to make the footer even smaller
     textAlign: "center",
+    bottom :0 
   };
 
   const smallText = {
