@@ -17,6 +17,7 @@ import { filledInputClasses } from "@mui/material";
 
 // import Herosection from './components/Herosection';
 import ContactUs from "./components/ContactUs";
+import SubmitDonation from "./components/SubmitDonation";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -188,6 +189,7 @@ const reload =()=>{
             </ProtectedRoute>
           }
         />
+        <Route path="/SubmitDonation" element={<SubmitDonation />} />
         <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
               <AllProjects projects={projects} />
             </ProtectedRoute>}/>

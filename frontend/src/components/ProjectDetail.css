@@ -1,0 +1,66 @@
+.project-detail {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .project-image {
+    max-width: 200px;
+    margin-right: 20px;
+  }
+  
+  .project-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .project-description {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  
+  .project-funds {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .project-goal,
+  .project-current {
+    font-size: 14px;
+  }
+  
+  .project-dates {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .project-start-date,
+  .project-end-date {
+    font-size: 14px;
+  }
+  
+  .project-comment {
+    margin-top: 15px;
+    font-size: 16px;
+  }
+  
+  .project-donate-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .project-donate-button:hover {
+    background-color: #0056b3;
+  }
