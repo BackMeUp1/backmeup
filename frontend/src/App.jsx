@@ -147,11 +147,16 @@ const reload =()=>{
 
           path="/projects"
           element={
+            <ProtectedRoute role="user">
+
             <ProjectList
               projects={projects}
               setSelected={setSelected}
               filProjects={filteredProjects}
-            /> }  />
+            /> 
+                        </ProtectedRoute>
+
+          }/>
 
         <Route
           path="/added"
@@ -178,6 +183,7 @@ const reload =()=>{
           element={
             <>
               <ProtectedRoute role="user">
+              <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/> 
                 <Home projects={projects}/>
               </ProtectedRoute>
   
@@ -191,17 +197,6 @@ const reload =()=>{
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
         
         <Route
-        
-          path="/x"
-          element={
-            <ProtectedRoute role="user">
-              <Home />
-              <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/> 
-            </ProtectedRoute>
-          }
-        />
-        
-        <Route
           path="/admin/Dashboard"
           element={
             <ProtectedRoute role="admin">
@@ -209,7 +204,12 @@ const reload =()=>{
             </ProtectedRoute>
           }
         />
-        <Route path="/SubmitDonation" element={<SubmitDonation />} />
+        <Route path="/SubmitDonation" 
+        element={
+        <SubmitDonation />
+      } 
+        />
+
         <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
               <AllProjects projects={projects} />
             </ProtectedRoute>}/>
