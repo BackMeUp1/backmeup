@@ -30,16 +30,6 @@ function SecondNavbar({ onCategorySelect, handleSearch, search}) {
     search(newTerm);
   }
 
-
-  
-
-  
- 
-
-
-  
-  
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -107,17 +97,12 @@ function SecondNavbar({ onCategorySelect, handleSearch, search}) {
             <form >
               <InputBase
                 placeholder="Search..."
-              
                 onChange={handleSearched}
-              
                 sx={{ mr: 1, color: "white" }}
-                
-                
               />
               <Button
                 type="submit"
                 sx={{ color: "white", backgroundColor: "transparent" }}
-            
               >
                 <SearchIcon />
               </Button>

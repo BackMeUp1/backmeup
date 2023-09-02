@@ -31,10 +31,6 @@ function App() {
   const [adino, setAdino] = useState({});
   const [trigger,setTrigger] = useState(false)
   
-
-
-
-
   const ading = () => {
     setAdino({
       title,
@@ -49,8 +45,6 @@ function App() {
       categories,
     });
   };
-
-  
 
   const search = (searchTerm) => {
       if (searchTerm === '') {
@@ -155,15 +149,12 @@ function App() {
 
   return (
     <BrowserRouter>
-
-      <SecondNavbar  search={search} onCategorySelect={handleCategorySelect} />
-
       <Routes>
         <Route
           path="/projects"
           element={
             <ProtectedRoute role="user">
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
+              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <ProjectList
                 projects={projects}
                 setSelected={setSelected}
@@ -178,7 +169,7 @@ function App() {
           path="/added"
           element={
             <ProtectedRoute role="user">
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
+              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <Added ading={ading} refresh={refresh} setrefresh={setrefresh} />
             </ProtectedRoute>
           }
@@ -202,13 +193,7 @@ function App() {
           element={
             <>
               <ProtectedRoute role="user">
-                <SecondNavbar onCategorySelect={handleCategorySelect} />
-                <Navbar
-                  reload={reload}
-                  handleSearch={handleSearch}
-                  projects={projects}
-                  projectlist={projectList}
-                />
+              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
                 <Home projects={projects} />
               </ProtectedRoute>
             </>
@@ -218,14 +203,11 @@ function App() {
           path="/ProjectDetail"
           element={
             <>
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
+              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <ProjectDetail project={selected} />
             </>
           }
         />
-
-        <Route path="/search" element={<SearchOne str={searchQuery} />} />
-
         <Route
           path="/admin/Dashboard"
           element={
@@ -240,7 +222,7 @@ function App() {
           path="/admin/All-project"
           element={
             <ProtectedRoute role="admin">
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
+              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <AllProjects projects={projects} />
             </ProtectedRoute>
           }
@@ -250,7 +232,6 @@ function App() {
           path="/admin/Demande"
           element={
             <ProtectedRoute role="admin">
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <Demande projects={projects} />
             </ProtectedRoute>
           }
@@ -259,7 +240,6 @@ function App() {
           path="/admin/users"
           element={
             <ProtectedRoute role="admin">
-              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <UserList />
             </ProtectedRoute>
           }
