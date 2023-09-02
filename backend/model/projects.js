@@ -8,6 +8,7 @@ const add = (ProjectData, callback) => {
   });
 };
 
+
 const addDonation = (ProjectData, callback) => {
   const sql = `UPDATE INTO projects SET ?`;
   connection.query(sql, ProjectData, function (error, results) {
@@ -45,7 +46,6 @@ const putProject = (idprojects, updatedData, callback) => {
       callback(error, results);
   });
 };
-
 
 const putProjectPermission = (idprojects, updatedData, callback) => {
   const sql = `UPDATE projects SET is_approved = ? WHERE idprojects = ?`;
