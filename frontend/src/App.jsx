@@ -9,15 +9,15 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import SearchOne from "./components/SearchOne";
 import Dashboard from "./components/admin/Dashboard.jsx";
-import AllProjects from "./components/admin/AllProjects.jsx"
+import AllProjects from "./components/admin/AllProjects.jsx";
 import Demande from "./components/admin/Demande";
-import UserList from "./components/admin/userList.jsx"
+import UserList from "./components/admin/userList.jsx";
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
 import { filledInputClasses } from "@mui/material";
 
-// import Herosection from './components/Herosection';
+
 import ContactUs from "./components/ContactUs";
 import SubmitDonation from "./components/SubmitDonation";
 
@@ -29,9 +29,9 @@ function App() {
   const [selected, setSelected] = useState({});
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [load, setLoad] = useState(true);
-  const [adino,setAdino]=useState({})
+  const [adino, setAdino] = useState({});
 
-  const ading=()=>{
+  const ading = () => {
     setAdino({
       title,
       description,
@@ -42,23 +42,20 @@ function App() {
       endDate,
       comment,
       image,
-      categories
-  })
-   }
+      categories,
+    });
+  };
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/project/permissionOne")
       .then((response) => {
         setProjects(response.data);
-        
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, [refresh]);
-
-
 
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
@@ -75,11 +72,11 @@ function App() {
     setFilteredProjects(newFilteredProjects);
   };
 
-  const isAuthenticated = Cookies.get("token")
+  const isAuthenticated = Cookies.get("token");
 
   useEffect(() => {
     const fetchUser = async () => {
-     setLoad(true);
+      setLoad(true);
       try {
         const response = await fetch(
           "http://localhost:4000/api/users/current",
@@ -90,7 +87,7 @@ function App() {
             },
           }
         );
-  
+
         if (response.ok) {
           const userData = await response.json();
           console.log(userData, "this userData");
@@ -98,28 +95,31 @@ function App() {
         }
         setLoad(false);
       } catch (error) {
-        // setLoad(false);
+        
         console.error("Error fetching user data:", error);
       }
     };
     fetchUser();
   }, []);
 
-const projectList =(query)=>{
-if (!query){
-  setrefresh(!refresh)
-}
-else setProjects(projects.filter((e) => {
-  console.log("el", e);
-  return (
-    e.title.toLowerCase().includes(query.toLowerCase()) ||
-    e.categories.toLowerCase().includes(query.toLowerCase())
-  );}))
-}
+  const projectList = (query) => {
+    if (!query) {
+      setrefresh(!refresh);
+    } else
+      setProjects(
+        projects.filter((e) => {
+          console.log("el", e);
+          return (
+            e.title.toLowerCase().includes(query.toLowerCase()) ||
+            e.categories.toLowerCase().includes(query.toLowerCase())
+          );
+        })
+      );
+  };
 
   const ProtectedRoute = ({ role, children }) => {
     console.log(!load);
- if (!load) {
+    if (!load) {
       if (role === "admin" && user?.role === "admin") {
         return children;
       } else if (role === "user" && user?.role === "user") {
@@ -134,9 +134,9 @@ else setProjects(projects.filter((e) => {
   const handleSearch = (str) => {
     setSearchQuery(str);
   };
-const reload =()=>{
-  setrefresh(!refresh)
-}
+  const reload = () => {
+    setrefresh(!refresh);
+  };
 
   return (
     <BrowserRouter>
@@ -144,25 +144,23 @@ const reload =()=>{
 
       <Routes>
         <Route
-
           path="/projects"
           element={
             <ProtectedRoute role="user">
-
-            <ProjectList
-              projects={projects}
-              setSelected={setSelected}
-              filProjects={filteredProjects}
-            /> 
-                        </ProtectedRoute>
-
-          }/>
+              <ProjectList
+                projects={projects}
+                setSelected={setSelected}
+                filProjects={filteredProjects}
+              />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/added"
           element={
             <ProtectedRoute role="user">
-              <Added  ading={ading}  refresh={refresh} setrefresh={setrefresh}/>
+              <Added ading={ading} refresh={refresh} setrefresh={setrefresh} />
             </ProtectedRoute>
           }
         />
@@ -173,9 +171,11 @@ const reload =()=>{
               user?.role === "admin" ? (
                 <Navigate to="/admin/Dashboard" />
               ) : (
-                <Navigate to="/" /> )
+                <Navigate to="/" />
+              )
             ) : (
-              <Login />)
+              <Login />
+            )
           }
         />
         <Route
@@ -183,10 +183,14 @@ const reload =()=>{
           element={
             <>
               <ProtectedRoute role="user">
-              <Navbar reload={reload} handleSearch={handleSearch} projects={projects}  projectlist={projectList}/> 
-                <Home projects={projects}/>
+                <Navbar
+                  reload={reload}
+                  handleSearch={handleSearch}
+                  projects={projects}
+                  projectlist={projectList}
+                />
+                <Home projects={projects} />
               </ProtectedRoute>
-  
             </>
           }
         />
@@ -195,7 +199,7 @@ const reload =()=>{
           element={<ProjectDetail project={selected} />}
         />
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
-        
+
         <Route
           path="/admin/Dashboard"
           element={
@@ -204,26 +208,35 @@ const reload =()=>{
             </ProtectedRoute>
           }
         />
-        <Route path="/SubmitDonation" 
-        element={
-        <SubmitDonation />
-      } 
+        <Route path="/SubmitDonation" element={<SubmitDonation />} />
+
+        <Route
+          path="/admin/All-project"
+          element={
+            <ProtectedRoute role="admin">
+              <AllProjects projects={projects} />
+            </ProtectedRoute>
+          }
         />
 
-        <Route path="/admin/All-project"  element={ <ProtectedRoute role="admin">
-              <AllProjects projects={projects} />
-            </ProtectedRoute>}/>
-
-            <Route path="/admin/Demande"  element={ <ProtectedRoute role="admin">
+        <Route
+          path="/admin/Demande"
+          element={
+            <ProtectedRoute role="admin">
               <Demande projects={projects} />
-            </ProtectedRoute>}/>
-        <Route path="/admin/users"  element={ <ProtectedRoute role="admin">
-              <UserList/>
-            </ProtectedRoute>}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute role="admin">
+              <UserList />
+            </ProtectedRoute>
+          }
         />
 
         <Route path="/contact" element={<ContactUs />} />
-
       </Routes>
       <Footer />
     </BrowserRouter>
