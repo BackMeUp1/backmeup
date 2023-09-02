@@ -175,7 +175,9 @@ const ProjectList = (props) => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    navigate("/SubmitDonation", { state: { project } });
+                    navigate("/SubmitDonation", { state: { project } }   )
+                    props.stalTwo(project) ;
+                  
                   }}
                 >
                   Donate

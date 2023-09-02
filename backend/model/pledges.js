@@ -7,6 +7,8 @@ const getAll = (callback) => {
   })
 };
 
+
+
 const add = (pledgesData, callback) => {
   const sql = `INSERT INTO pledges (amount, users_iduser, projects_idprojects) VALUES (?, ?, ?)`;
   const { amount, users_iduser, projects_idprojects } = pledgesData;

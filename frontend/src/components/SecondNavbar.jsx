@@ -9,12 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import InputBase from "@mui/material/InputBase";
 
-const pages = ["games", "movies", "books", "Tech", "Designs"];
+const pages = ["Games", "Movies", "Books", "Tech", "Designs"];
 
 function SecondNavbar({ onCategorySelect, search }) {
   const isAuthenticated = Cookies.get("token");
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+
 
   const handleLogOut = () => {
     Cookies.remove("token");
@@ -25,10 +26,17 @@ function SecondNavbar({ onCategorySelect, search }) {
   const handleAddProject = () => {
     navigate("/added");
   };
-  const handleSearchInputChange = (event) => {
-    const newSearchTerm = event.target.value;
-    setSearchTerm(newSearchTerm);
-    search(newSearchTerm); 
+
+
+  
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); 
+    search(searchTerm); 
   };
 
   return (
@@ -69,6 +77,7 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
+
             {pages.map((page) => (
               <Button
                 key={page}
@@ -79,6 +88,7 @@ function SecondNavbar({ onCategorySelect, search }) {
               </Button>
             ))}
           </Box>
+
           <Box
             sx={{
               flexGrow: 1,
@@ -86,7 +96,8 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
-            <form onSubmit={(e) => e.preventDefault()}>
+
+            <form onSubmit={handleSearchSubmit}> 
               <InputBase
                 type="text"
                 placeholder="Search..."

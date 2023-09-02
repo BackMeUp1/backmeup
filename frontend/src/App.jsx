@@ -26,6 +26,7 @@ function App() {
   const [load, setLoad] = useState(true);
   const [adino, setAdino] = useState({});
   const [trigger,setTrigger] = useState(false)
+  const [updated,setUpdate] = useState({})
   
   const ading = () => {
     setAdino({
@@ -41,6 +42,11 @@ function App() {
       categories,
     });
   };
+
+  const stalUpdated =(obj)=>{
+    setUpdate (obj)
+    
+  }
 
   const search = (searchTerm) => {
       if (searchTerm === '') {
@@ -155,6 +161,7 @@ function App() {
                 setSelected={setSelected}
                 filProjects={filteredProjects}
                 projected={projects}
+                stalTwo={stalUpdated}
               />
             </ProtectedRoute>
           }
@@ -211,7 +218,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/SubmitDonation" element={<SubmitDonation />} />
+        <Route path="/SubmitDonation" element={<SubmitDonation  updated={updated} />  } />
 
         <Route
           path="/admin/All-project"

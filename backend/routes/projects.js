@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  {addProject,getProject,UpdateProject,RemoveProject,getZero,UpdateProjectPermission,getOne} = require ("../controller/projects")
+const  {addProject,getProject,UpdateAmount,UpdateProject,RemoveProject,getZero,UpdateProjectPermission,getOne} = require ("../controller/projects")
 
 
 router.post('/add',addProject);
@@ -10,6 +10,7 @@ router.delete('/:id',RemoveProject)
 router.get(`/getPermission`,getZero)
 router.put(`/permission/:id`,UpdateProjectPermission)
 router.get(`/permissionOne`,getOne)
+router.put(`/Amount/:id`,UpdateAmount)
 
 
 

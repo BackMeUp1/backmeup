@@ -9,12 +9,15 @@ const add = (ProjectData, callback) => {
 };
 
 
-const addDonation = (ProjectData, callback) => {
-  const sql = `UPDATE INTO projects SET ?`;
-  connection.query(sql, ProjectData, function (error, results) {
-    callback(error, results);
+const putAmount = (idprojects, updatedData, callback) => {
+  const sql = `UPDATE projects SET current_amount = ? WHERE idprojects = ?`;
+  connection.query(sql, [updatedData, idprojects], function(error, results) {
+      callback(error, results);
   });
 };
+
+
+
   
 const getPermission=(ProjectData, callback)=>{
   const sql = 'SELECT * FROM projects WHERE is_approved = 0';
@@ -67,5 +70,6 @@ const remove = (projectid, callback) => {
     remove,
     getPermission,
     putProjectPermission,
-    getPermissionApproved
+    getPermissionApproved,
+    putAmount
   }
