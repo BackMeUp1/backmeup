@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import SecondNavbar from "./components/SecondNavbar";
 import Home from "./components/Home";
 import ProjectList from "./components/projectList.jsx";
 import ProjectDetail from "./components/ProjectDetail";
 import axios from "axios";
 import Footer from "./components/Footer";
-import SearchOne from "./components/SearchOne";
 import Dashboard from "./components/admin/Dashboard.jsx";
 import AllProjects from "./components/admin/AllProjects.jsx";
 import Demande from "./components/admin/Demande";
