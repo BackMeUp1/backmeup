@@ -10,12 +10,12 @@ import Cookies from "js-cookie";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 
-const pages = ["games", "movies", "books", "Tech", "Designs"];
+const pages = ["Games", "Movies", "Books", "Tech", "Designs"];
 
 function SecondNavbar({ onCategorySelect, search }) {
   const isAuthenticated = Cookies.get("token");
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState(""); // Add state for search term
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   const handleLogOut = () => {
     Cookies.remove("token");
@@ -26,15 +26,15 @@ function SecondNavbar({ onCategorySelect, search }) {
     navigate("/added");
   };
 
-  // Update the search term state when the input value changes
+  
   const handleSearchInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Trigger the search when the form is submitted
+  
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    search(searchTerm); // Call the search function with the search term
+    e.preventDefault(); 
+    search(searchTerm); 
   };
 
   return (
@@ -75,13 +75,7 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
-            <Button
-              key="All"
-              onClick={() => onCategorySelect(null)}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              All
-            </Button>
+            
             {pages.map((page) => (
               <Button
                 key={page}
@@ -93,7 +87,7 @@ function SecondNavbar({ onCategorySelect, search }) {
             ))}
           </Box>
 
-          {/* Search input and button */}
+          
           <Box
             sx={{
               flexGrow: 1,
@@ -101,7 +95,7 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
-            <form onSubmit={handleSearchSubmit}> {/* Attach the onSubmit event handler */}
+            <form onSubmit={handleSearchSubmit}> 
               <InputBase
                 placeholder="Search..."
                 onChange={handleSearchInputChange}
@@ -139,7 +133,7 @@ function SecondNavbar({ onCategorySelect, search }) {
                   key="Add Project"
                   sx={{ my: 2, color: "white", display: "block" }}
                   component={Link}
-                  onClick={handleAddProject} // Update the onClick event handler
+                  onClick={handleAddProject} 
                   to="/added"
                 >
                   Add Project
