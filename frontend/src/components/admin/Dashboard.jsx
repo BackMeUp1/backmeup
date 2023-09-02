@@ -44,8 +44,8 @@ const AdminDashboard = (props) => {
     { name: "Project 1", clicks: 30 },
     { name: "Project 2", clicks: 25 },
     { name: "Project 3", clicks: 40 },
-    { name: "Project 3", clicks: 43 },
-    { name: "Project 3", clicks: 65 },
+    { name: "Project 4", clicks: 43 },
+    { name: "Project 5", clicks: 65 },
   ];
 
   // Sample data for the site visits chart
@@ -88,72 +88,68 @@ const AdminDashboard = (props) => {
         </Button>
       </div>
       <div className="content">
-        <div className="card-container">
-          <Card>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Statistics
+            </Typography>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary={`Total Projects: ${totalProjects}`} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <MonetizationOnIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`Total Amount Collected: $${totalAmountCollected.toFixed(
+                    2
+                  )}`}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary={`Total Backers: ${totalBackers}`} />
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
+
+        <div className="charts-container">
+          <Card className="chart-card">
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Statistics
+                Clicks per Project
               </Typography>
-              <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <AssignmentIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`Total Projects: ${totalProjects}`} />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <MonetizationOnIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={`Total Amount Collected: $${totalAmountCollected.toFixed(
-                      2
-                    )}`}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <PeopleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`Total Backers: ${totalBackers}`} />
-                </ListItem>
-              </List>
+              <BarChart width={400} height={300} data={chartData}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="clicks" fill="#8884d8" />
+              </BarChart>
             </CardContent>
           </Card>
 
-          <div className="chart-container">
-            {/* Clicks per Project Chart */}
-            <Card className="chart-card">
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Clicks per Project
-                </Typography>
-                <BarChart width={400} height={300} data={chartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="clicks" fill="#8884d8" />
-                </BarChart>
-              </CardContent>
-            </Card>
-
-            {/* Site Visits Chart */}
-            <Card className="chart-card">
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Site Visits
-                </Typography>
-                <LineChart width={400} height={300} data={siteVisitsChartData}>
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="visits" stroke="#82ca9d" />
-                </LineChart>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="chart-card">
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Site Visits
+              </Typography>
+              <LineChart width={400} height={300} data={siteVisitsChartData}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="visits" stroke="#82ca9d" />
+              </LineChart>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

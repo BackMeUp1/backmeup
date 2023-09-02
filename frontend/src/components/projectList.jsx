@@ -1,133 +1,245 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Grid,
+  IconButton,
+  Collapse,
+  Box,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  LinearProgress, // Import LinearProgress component
+} from "@mui/material";
+import {
+  Share as ShareIcon,
+  ExpandMore as ExpandMoreIcon,
+} from "@mui/icons-material";
 
-// const ProjectList = () => {
-//   const [menuView, setMenuView] = useState(false);
-//   const [projects, setProjects] = useState([]); 
+const cardStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "stretch",
+  height: "100%",
+  borderRadius: "10px",
+  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.2s",
+  marginBottom: "20px",
+};
 
-//   const toggleMenu = () => {
-//     setMenuView(!menuView);
-//   };
+const hoverStyle = {
+  transform: "scale(1.05)",
+};
 
-//   useEffect(() => {
-    
-//     axios.get('/api/projects')
-//       .then(response => {
-//         setProjects(response.data); 
-//       })
-//       .catch(error => {
-//         console.error('Error fetching data:', error);
-//       });
-//   }, []);
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "16px",
+};
 
-//   return (
-//     <div>
-//       <span onClick={toggleMenu}>All categories</span>
-//       <ul>
-//         {projects.map((project, index) => (
-//           <li key={index}>
-//             <img src={project.image} alt="image" />
-//             <h3>{project.title}</h3>
-//             <p>{project.description}</p>
-//             <p>Goal: ${project.goal_amount}</p>
-//             <p>Current amount: ${project.current_amount}</p>
-//             <p>Start Date: {project['start-date']}</p>
-//             <p>End Date: {project['end-date']}</p>
-//             <p>{project.comment}</p>
-//             <button>Donate</button>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
+const headlineStyle = {
+  fontSize: "24px",
+  fontWeight: "bold",
+  marginBottom: "16px",
+};
 
-// export default ProjectList;
-
-
-
-
-
-import React, { useState } from 'react';
-import './ProjectList.css';
-import { useNavigate } from 'react-router-dom';
-import Login from './login';
+const linkStyle = {
+  textDecoration: "none", // Remove underline
+  color: "inherit", // Inherit color from parent
+  cursor: "pointer", // Change cursor on hover
+};
 
 const ProjectList = (props) => {
-  
   const navigate = useNavigate();
-  const { projects, setSelected ,filProjects   } = props;
-
-  
-  // Create an array to store the expanded state for each project
+  const { projects, setSelected, filProjects } = props;
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
 
   const handleImageClick = (project) => {
     setSelected(project);
-    navigate('/ProjectDetail');
+    navigate("/ProjectDetail");
   };
 
-  const projectsToRender = filProjects && filProjects.length > 0 ? filProjects : projects;
+  const projectsToRender =
+    filProjects && filProjects.length > 0 ? filProjects : projects;
 
-  const toggleDescription = (index) => {
-    // Create a new array and toggle the expanded state for the specified project index
+  const toggleDescription = (index, expanded) => {
     const newExpandedDescriptions = [...expandedDescriptions];
-    newExpandedDescriptions[index] = !newExpandedDescriptions[index];
+    newExpandedDescriptions[index] = expanded;
     setExpandedDescriptions(newExpandedDescriptions);
   };
 
-
+  const handleShare = (project) => {
+    setShareDialogOpen(true);
+  };
 
   return (
-    <div className="list-container">
-      <ul className="project-list">
-        {projectsToRender.map((project, index) => {
-          console.log(project,"here");
-          return(
-          <li className="project-item" key={index}>
-            <img
-              src={project.image}
-              alt={project.title}
-              onClick={() => {
-                setSelected(project);
-                navigate('/ProjectDetail');
-              }}
-              className="project-image"
-            />
-            <div className="project-details">
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-description">
-                {expandedDescriptions[index] || project.description.length <= 100
-                  ? project.description
-                  : project.description.slice(0, 100)}{/* Display first 100 characters */}
-                {project.description.length > 100 && (
-                  <button
-                    className="read-more-button"
-                    onClick={() => toggleDescription(index)}
+    <Paper style={containerStyle} elevation={0}>
+      <Typography variant="h2" style={headlineStyle}>
+        Projects Asking for Backings at This Date:
+      </Typography>
+      <Grid container spacing={3}>
+        {projectsToRender.map((project, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Card
+              style={cardStyle}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style = { ...cardStyle, ...hoverStyle })
+              }
+              onMouseLeave={(e) => (e.currentTarget.style = cardStyle)}
+            >
+              <CardActionArea onClick={() => handleImageClick(project)}>
+                <CardMedia
+                  component="img"
+                  alt={project.title}
+                  height="250"
+                  image={project.image}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="div">
+                    <span
+                      style={linkStyle} // Apply custom link styles
+                      onClick={() => handleImageClick(project)} // Handle click
+                    >
+                      {project.title}
+                    </span>
+                  </Typography>
+                  <Collapse
+                    in={expandedDescriptions[index]}
+                    timeout="auto"
+                    unmountOnExit
                   >
-                    {expandedDescriptions[index] ? 'Show Less' : 'Read More'}
-                  </button>
-                )}
-              </p>
-              <p className="project-info">Goal: ${project.goal_amount}</p>
-              <p className="project-info">Current amount: ${project.current_amount}</p>
-              <p className="project-info">Start Date: {project['start-date']}</p>
-              <p className="project-info">End Date: {project['end-date']}</p>
-              <p className="project-info">{project.comment}</p>
-              <p className="project-info">Category: {project.categories}</p>
-              <button className="project-donate-button" onClick={()=>{
-                console.log(project,"there");
-                navigate('/SubmitDonation', { state: { project } })}}>Donate</button>
-            </div>
-          </li>
-        )})}
-      </ul>
-    </div>
+                    <Typography variant="body2" color="text.secondary">
+                      {project.description}
+                    </Typography>
+                  </Collapse>
+                  {project.description.length > 100 && (
+                    <IconButton
+                      onClick={() =>
+                        toggleDescription(index, !expandedDescriptions[index])
+                      }
+                      aria-expanded={expandedDescriptions[index]}
+                      aria-label="show more"
+                      style={{ marginTop: "8px" }}
+                    >
+                      <ExpandMoreIcon />
+                    </IconButton>
+                  )}
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  width="100%"
+                >
+                  <Box flexGrow={1}>
+                    <Typography variant="body2" color="text.secondary">
+                      Goal: ${project.goal_amount}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Current amount: ${project.current_amount}
+                    </Typography>
+                    <LinearProgress
+                      variant="determinate"
+                      value={(project.current_amount / project.goal_amount) * 100}
+                      style={{ marginTop: "8px", height: "10px" }}
+                    />
+                  </Box>
+                  <Box>
+                    <IconButton
+                      aria-label="share"
+                      onClick={() => handleShare(project)}
+                    >
+                      <ShareIcon color="primary" />
+                    </IconButton>
+                  </Box>
+                </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    navigate("/SubmitDonation", { state: { project } });
+                  }}
+                >
+                  Donate
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* Share Dialog */}
+      <Dialog
+        open={shareDialogOpen}
+        onClose={() => setShareDialogOpen(false)}
+        aria-labelledby="share-dialog-title"
+      >
+        <DialogTitle id="share-dialog-title">Share Project</DialogTitle>
+        <DialogContent>
+          <List>
+            <ListItem
+              button
+              onClick={() => {
+                window.open("https://www.facebook.com", "_blank");
+                setShareDialogOpen(false);
+              }}
+            >
+              <ListItemIcon>
+                <i className="fab fa-facebook"></i>
+              </ListItemIcon>
+              <ListItemText primary="Facebook" />
+            </ListItem>
+            <ListItem
+              button
+              onClick={() => {
+                window.open("https://www.twitter.com", "_blank");
+                setShareDialogOpen(false);
+              }}
+            >
+              <ListItemIcon>
+                <i className="fab fa-twitter"></i>
+              </ListItemIcon>
+              <ListItemText primary="Twitter" />
+            </ListItem>
+            <ListItem
+              button
+              onClick={() => {
+                window.open("https://www.instagram.com", "_blank");
+                setShareDialogOpen(false);
+              }}
+            >
+              <ListItemIcon>
+                <i className="fab fa-instagram"></i>
+              </ListItemIcon>
+              <ListItemText primary="Instagram" />
+            </ListItem>
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShareDialogOpen(false)} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Paper>
   );
 };
 
 export default ProjectList;
-
- 
-
-
