@@ -63,8 +63,6 @@ const linkStyle = {
   cursor: "pointer", // Change cursor on hover
 };
 import './ProjectList.css';
-import Login from './login';
-
 const ProjectList = (props) => {
   const navigate = useNavigate();
 
