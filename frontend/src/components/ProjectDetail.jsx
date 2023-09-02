@@ -10,8 +10,6 @@ import {
 
 const ProjectDetail = (props) => {
   const { project } = props;
-
-  // Calculate the progress percentage
   const progress = (project.current_amount / project.goal_amount) * 100;
 
   return (

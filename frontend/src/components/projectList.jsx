@@ -58,9 +58,9 @@ const headlineStyle = {
 };
 
 const linkStyle = {
-  textDecoration: "none", // Remove underline
-  color: "inherit", // Inherit color from parent
-  cursor: "pointer", // Change cursor on hover
+  textDecoration: "none", 
+  color: "inherit", 
+  cursor: "pointer",
 };
 import './ProjectList.css';
 const ProjectList = (props) => {
@@ -113,8 +113,8 @@ const ProjectList = (props) => {
                 <CardContent>
                   <Typography gutterBottom variant="h6" component="div">
                     <span
-                      style={linkStyle} // Apply custom link styles
-                      onClick={() => handleImageClick(project)} // Handle click
+                      style={linkStyle} 
+                      onClick={() => handleImageClick(project)}
                     >
                       {project.title}
                     </span>
@@ -187,8 +187,6 @@ const ProjectList = (props) => {
           </Grid>
         ))}
       </Grid>
-
-      {/* Share Dialog */}
       <Dialog
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
@@ -198,7 +196,7 @@ const ProjectList = (props) => {
         <DialogContent>
           <List>
             <ListItem
-              button
+              
               onClick={() => {
                 window.open("https://www.facebook.com", "_blank");
                 setShareDialogOpen(false);
@@ -210,7 +208,7 @@ const ProjectList = (props) => {
               <ListItemText primary="Facebook" />
             </ListItem>
             <ListItem
-              button
+              
               onClick={() => {
                 window.open("https://www.twitter.com", "_blank");
                 setShareDialogOpen(false);
@@ -222,7 +220,7 @@ const ProjectList = (props) => {
               <ListItemText primary="Twitter" />
             </ListItem>
             <ListItem
-              button
+              
               onClick={() => {
                 window.open("https://www.instagram.com", "_blank");
                 setShareDialogOpen(false);

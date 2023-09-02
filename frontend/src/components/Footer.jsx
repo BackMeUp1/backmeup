@@ -16,18 +16,18 @@ const Footer = () => {
   const footerStyle = {
     backgroundColor: "#333",
     color: "#fff",
-    padding: "5px 0", // Adjust padding to make the footer even smaller
+    padding: "5px 0", 
     textAlign: "center",
     bottom :0 
   };
 
   const smallText = {
-    fontSize: "14px", // Reduce the font size for smaller text
+    fontSize: "14px", 
     marginBottom: "8px",
   };
 
   const socialIconStyle = {
-    marginRight: "8px", // Reduce the margin for social icons
+    marginRight: "8px", 
     color: "#fff",
   };
   const handleContact=()=>{

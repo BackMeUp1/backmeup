@@ -8,23 +8,25 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 
 const pages = ["Games", "Movies", "Books", "Tech", "Designs"];
 
 function SecondNavbar({ onCategorySelect, search }) {
   const isAuthenticated = Cookies.get("token");
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   const handleLogOut = () => {
     Cookies.remove("token");
+    window.location.reload();
     navigate("/login");
   };
 
   const handleAddProject = () => {
     navigate("/added");
   };
+
 
   
   const handleSearchInputChange = (e) => {
@@ -75,7 +77,7 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
-            
+
             {pages.map((page) => (
               <Button
                 key={page}
@@ -87,7 +89,6 @@ function SecondNavbar({ onCategorySelect, search }) {
             ))}
           </Box>
 
-          
           <Box
             sx={{
               flexGrow: 1,
@@ -95,19 +96,14 @@ function SecondNavbar({ onCategorySelect, search }) {
               justifyContent: "center",
             }}
           >
+
             <form onSubmit={handleSearchSubmit}> 
               <InputBase
+                type="text"
                 placeholder="Search..."
+                value={searchTerm}
                 onChange={handleSearchInputChange}
-                value={searchTerm} 
-                sx={{ mr: 1, color: "white" }}
               />
-              <Button
-                type="submit"
-                sx={{ color: "white", backgroundColor: "transparent" }}
-              >
-                <SearchIcon />
-              </Button>
             </form>
           </Box>
 

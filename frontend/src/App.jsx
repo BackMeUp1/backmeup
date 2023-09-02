@@ -13,8 +13,6 @@ import UserList from "./components/admin/userList.jsx";
 import Cookies from "js-cookie";
 import Login from "./components/login.jsx";
 import Added from "./components/Added";
-import { filledInputClasses } from "@mui/material";
-
 import ContactUs from "./components/ContactUs";
 import SubmitDonation from "./components/SubmitDonation";
 
@@ -78,7 +76,6 @@ function App() {
   const handleCategorySelect = (category) => {
     setSearchQuery("");
     setSelected(null);
-
     const newFilteredProjects = category
       ? projects.filter((project) => project.categories === category)
       : projects;
@@ -227,8 +224,7 @@ function App() {
           path="/admin/All-project"
           element={
             <ProtectedRoute role="admin">
-              <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
-              <AllProjects projects={projects} />
+              <AllProjects projects={projects} search={search}/>
             </ProtectedRoute>
           }
         />
@@ -249,8 +245,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/contact" element={<ContactUs />} />
+          <Route
+          path="/contact" 
+          element={
+            <ProtectedRoute role="admin">
+             <ContactUs />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

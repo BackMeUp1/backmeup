@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./AdminDashboard.css";
 import Cookies from "js-cookie";
@@ -24,9 +24,18 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, LineChart, Line } from "r
 
 const AdminDashboard = (props) => {
   const { projects, siteVisitsData } = props;
+  const [triggerReload, setTriggerReload] = useState(false);
+
+  useEffect(() => {
+    if (triggerReload) {
+      // Page reload logic
+      window.location.reload();
+    }
+  }, [triggerReload]);
 
   const handleLogout = () => {
     Cookies.remove("token");
+    setTriggerReload(true);
   };
 
   const totalProjects = projects.length;
@@ -39,7 +48,6 @@ const AdminDashboard = (props) => {
     0
   );
 
-  // Sample data for the clicks per project chart
   const chartData = [
     { name: "Project 1", clicks: 30 },
     { name: "Project 2", clicks: 25 },
@@ -47,15 +55,12 @@ const AdminDashboard = (props) => {
     { name: "Project 4", clicks: 43 },
     { name: "Project 5", clicks: 65 },
   ];
-
-  // Sample data for the site visits chart
   const siteVisitsChartData = [
     { date: "2023-08-01", visits: 100 },
     { date: "2023-08-02", visits: 150 },
     { date: "2023-08-03", visits: 120 },
     { date: "2023-08-03", visits: 105 },
     { date: "2023-08-03", visits: 165 },
-    // Add more data objects with date and visits properties
   ];
 
   return (

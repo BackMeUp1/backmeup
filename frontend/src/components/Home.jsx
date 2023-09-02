@@ -17,10 +17,10 @@ export default function Home({ projects }) {
     borderRadius: "4px",
     padding: "16px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    display: "flex", // Display divs horizontally
+    display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "8px", // Spacing between elements
+    gap: "8px",
   };
 
   const featuredProjectStyle = {
@@ -29,8 +29,8 @@ export default function Home({ projects }) {
 
   const otherProjectsStyle = {
     marginTop: "16px",
-    maxHeight: "400px", // Set a fixed maximum height
-    overflowY: "scroll", // Add a scroll bar when content exceeds the height
+    maxHeight: "400px",
+    overflowY: "scroll",
   };
 
   const totalProjects = projects.length;

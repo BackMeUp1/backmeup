@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router';
-
+import AdminNavbar from "./adminNavbar";
 import { useLocation } from 'react-router';
 import Swal from 'sweetalert2';
 
@@ -77,6 +77,7 @@ console.log(project);
 
   return (
     <div>
+            <AdminNavbar/>
       <h2>Project Requests</h2>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
