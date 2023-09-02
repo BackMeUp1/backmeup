@@ -1,7 +1,38 @@
 import React from "react";
-import "./Home.css"; // Import the separate CSS file
+import { Container, Grid, Paper, Typography } from "@mui/material";
 
 export default function Home({ projects }) {
+  const containerStyle = {
+    marginTop: "16px",
+  };
+
+  const paperStyle = {
+    padding: "16px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
+
+  const statStyle = {
+    backgroundColor: "white",
+    borderRadius: "4px",
+    padding: "16px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    display: "flex", // Display divs horizontally
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "8px", // Spacing between elements
+  };
+
+  const featuredProjectStyle = {
+    marginTop: "16px",
+  };
+
+  const otherProjectsStyle = {
+    marginTop: "16px",
+    maxHeight: "400px", // Set a fixed maximum height
+    overflowY: "scroll", // Add a scroll bar when content exceeds the height
+  };
+
   const totalProjects = projects.length;
   const totalAmountCollected = projects.reduce(
     (total, project) => total + parseFloat(project.current_amount),
@@ -12,48 +43,65 @@ export default function Home({ projects }) {
     0
   );
 
-  const featuredProject = projects.reduce((maxProject, project) =>
-    parseFloat(project.current_amount) > parseFloat(maxProject.current_amount) ? project : maxProject
+  const featuredProject = projects.reduce(
+    (maxProject, project) =>
+      parseFloat(project.current_amount) > parseFloat(maxProject.current_amount)
+        ? project
+        : maxProject
   );
 
-  const someProjects = projects.slice(0, 3);
-
   return (
-    <div className="container">
-      <div className="stats-container">
-        <h4>Statistics</h4>
-        <div className="stat">
-          <h6>Total Projects</h6>
-          <p>{totalProjects}</p>
-        </div>
-        <div className="stat">
-          <h6>Total Amount Collected</h6>
-          <p>${totalAmountCollected.toFixed(2)}</p>
-        </div>
-        <div className="stat">
-          <h6>Total Backers</h6>
-          <p>{totalBackers}</p>
-        </div>
-      </div>
-      <div className="project-highlight">
-        <img
-          src={featuredProject.image}
-          alt="Featured Project"
-        />
-        <h4>Featured Project</h4>
-        <p>{featuredProject.title}</p>
-      </div>
-      <div className="other-projects">
-        <h4>Other Projects</h4>
-        {someProjects.map((project, index) => (
-          <div className="other-project-item" key={index}>
-            <h5>{project.title}</h5>
-            <p>{project.description}</p>
-            <p>${project.current_amount}</p>
-            <img src={project.image} alt="" />
-          </div>
-        ))}
-      </div>
-    </div>
+    <Container style={containerStyle}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Paper style={{ ...paperStyle, ...statStyle }}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography variant="h6">Total Projects</Typography>
+                <Typography variant="body1">{totalProjects}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="h6">Total Amount Collected</Typography>
+                <Typography variant="body1">
+                  ${totalAmountCollected.toFixed(2)}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="h6">Total Backers</Typography>
+                <Typography variant="body1">{totalBackers}</Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Paper style={{ ...paperStyle, ...featuredProjectStyle }}>
+            <img
+              src={featuredProject.image}
+              alt="Featured Project"
+              width="100%"
+            />
+            <Typography variant="h4">Featured Project</Typography>
+            <Typography variant="body1">{featuredProject.title}</Typography>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Paper style={{ ...paperStyle, ...otherProjectsStyle }}>
+            <Typography variant="h4">Other Projects</Typography>
+            {projects.map((project, index) => (
+              <div key={index}>
+                <Typography variant="h5">{project.title}</Typography>
+                <Typography variant="body1">{project.description}</Typography>
+                <Typography variant="body1">
+                  ${project.current_amount}
+                </Typography>
+                <img src={project.image} alt="" width="100%" />
+              </div>
+            ))}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

@@ -29,6 +29,11 @@ function App() {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [load, setLoad] = useState(true);
   const [adino, setAdino] = useState({});
+  const [trigger,setTrigger] = useState(false)
+  
+
+
+
 
   const ading = () => {
     setAdino({
@@ -45,6 +50,18 @@ function App() {
     });
   };
 
+  
+
+  const search = (searchTerm) => {
+      if (searchTerm === '') {
+        return setTrigger(!trigger)
+      }
+      const filteredData = projects.filter((e) =>
+        e.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setProjects(filteredData);
+    };
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/project/permissionOne")
@@ -54,7 +71,7 @@ function App() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [refresh]);
+  }, [trigger]);
 
   const handleProjectSelect = (project) => {
     setSelected(project);
@@ -138,7 +155,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <SecondNavbar onCategorySelect={handleCategorySelect} /> */}
+
+      <SecondNavbar  search={search} onCategorySelect={handleCategorySelect} />
 
       <Routes>
         <Route
@@ -150,6 +168,7 @@ function App() {
                 projects={projects}
                 setSelected={setSelected}
                 filProjects={filteredProjects}
+                projected={projects}
               />
             </ProtectedRoute>
           }

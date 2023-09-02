@@ -62,10 +62,13 @@ const linkStyle = {
   color: "inherit", // Inherit color from parent
   cursor: "pointer", // Change cursor on hover
 };
+import './ProjectList.css';
+import Login from './login';
 
 const ProjectList = (props) => {
   const navigate = useNavigate();
-  const { projects, setSelected, filProjects } = props;
+
+  const { projects, setSelected ,filProjects,projected  } = props;
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
 
@@ -93,7 +96,7 @@ const ProjectList = (props) => {
         Projects Asking for Backings at This Date:
       </Typography>
       <Grid container spacing={3}>
-        {projectsToRender.map((project, index) => (
+        {projected.map((project, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card
               style={cardStyle}
