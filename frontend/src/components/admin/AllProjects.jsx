@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./AllProject.css";
+import AdminNavbar from "./adminNavbar";
 import {
   Button,
   Typography,
@@ -55,6 +56,7 @@ const AllProject = (props) => {
 
   return (
     <div className="centered-container">
+            <AdminNavbar search={props.search}/>
       <div className="button-container">
         <Button variant="contained" onClick={() => {}}>
           Approved

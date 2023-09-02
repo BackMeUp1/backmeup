@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AdminNavbar from "./adminNavbar";
 import {
   Typography,
   Button,
@@ -41,6 +42,7 @@ const UserList = () => {
 
   return (
     <div>
+            <AdminNavbar/>
       <Typography variant="h2" gutterBottom>
         User List
       </Typography>

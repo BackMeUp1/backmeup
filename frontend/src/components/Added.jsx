@@ -68,7 +68,7 @@ const ModalComponent = (props) => {
   const uploadImage = async () => {
     const form = new FormData();
     form.append("file", file);
-    form.append("upload_preset", "khouloud"); // Your Cloudinary upload preset
+    form.append("upload_preset", "khouloud"); 
 
     try {
       const response = await axios.post(
