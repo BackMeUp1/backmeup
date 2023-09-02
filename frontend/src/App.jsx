@@ -58,7 +58,7 @@ function App() {
   }, [refresh]);
 
   const handleProjectSelect = (project) => {
-    setSelectedProject(project);
+    setSelected(project);
   };
 
   const handleCategorySelect = (category) => {
