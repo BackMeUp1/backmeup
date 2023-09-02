@@ -61,6 +61,21 @@ function Navbar(props) {
   
 
 const navigate= useNavigate()
+const handleSearch = (e) => {
+  var x = e.target.value
+  setQuery(x);
+ console.log(x);
+};
+const searchedPorject= ()=>{
+const filtered=props.projects.filter((e)=>{
+console.log("el",e);
+  return e.title.toLowerCase().includes(query.toLowerCase()) || 
+    e.categories.toLowerCase().includes(query.toLowerCase())
+})
+
+ props.setprojects(filtered)
+ console.log("projects",props.projects );
+}
 
 
   
@@ -97,7 +112,10 @@ const navigate= useNavigate()
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+             
               onChange={(e)=>{
+                setQuery(e.target.value);
+                searchedPorject(query)
                 
                props.projectlist(e.target.value);   
 
@@ -106,9 +124,9 @@ const navigate= useNavigate()
           
           </Search>
           <Button
-    variant="contained"
-    color="primary"
-    onClick={() => {
+      variant="contained"
+      color="primary"
+      onClick={() => {
       navigate("/added")
     }}
   >
