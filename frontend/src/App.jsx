@@ -17,7 +17,6 @@ import Login from "./components/login.jsx";
 import Added from "./components/Added";
 import { filledInputClasses } from "@mui/material";
 
-
 import ContactUs from "./components/ContactUs";
 import SubmitDonation from "./components/SubmitDonation";
 
@@ -112,7 +111,6 @@ function App() {
         }
         setLoad(false);
       } catch (error) {
-        
         console.error("Error fetching user data:", error);
       }
     };
@@ -157,6 +155,7 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <SecondNavbar  search={search} onCategorySelect={handleCategorySelect} />
 
       <Routes>
@@ -164,6 +163,7 @@ function App() {
           path="/projects"
           element={
             <ProtectedRoute role="user">
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <ProjectList
                 projects={projects}
                 setSelected={setSelected}
@@ -178,6 +178,7 @@ function App() {
           path="/added"
           element={
             <ProtectedRoute role="user">
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <Added ading={ading} refresh={refresh} setrefresh={setrefresh} />
             </ProtectedRoute>
           }
@@ -201,6 +202,7 @@ function App() {
           element={
             <>
               <ProtectedRoute role="user">
+                <SecondNavbar onCategorySelect={handleCategorySelect} />
                 <Navbar
                   reload={reload}
                   handleSearch={handleSearch}
@@ -214,8 +216,14 @@ function App() {
         />
         <Route
           path="/ProjectDetail"
-          element={<ProjectDetail project={selected} />}
+          element={
+            <>
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
+              <ProjectDetail project={selected} />
+            </>
+          }
         />
+
         <Route path="/search" element={<SearchOne str={searchQuery} />} />
 
         <Route
@@ -232,6 +240,7 @@ function App() {
           path="/admin/All-project"
           element={
             <ProtectedRoute role="admin">
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <AllProjects projects={projects} />
             </ProtectedRoute>
           }
@@ -241,6 +250,7 @@ function App() {
           path="/admin/Demande"
           element={
             <ProtectedRoute role="admin">
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <Demande projects={projects} />
             </ProtectedRoute>
           }
@@ -249,6 +259,7 @@ function App() {
           path="/admin/users"
           element={
             <ProtectedRoute role="admin">
+              <SecondNavbar onCategorySelect={handleCategorySelect} />
               <UserList />
             </ProtectedRoute>
           }

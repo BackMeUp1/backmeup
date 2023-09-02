@@ -10,6 +10,8 @@ import {
   CardContent,
   CardActions,
   Divider,
+  Grid,
+  CircularProgress,
 } from "@mui/material";
 
 const AllProject = (props) => {
@@ -52,7 +54,7 @@ const AllProject = (props) => {
   };
 
   return (
-    <div>
+    <div className="centered-container">
       <div className="button-container">
         <Button variant="contained" onClick={() => {}}>
           Approved
@@ -61,52 +63,54 @@ const AllProject = (props) => {
           Not Approved
         </Button>
       </div>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         All Projects
       </Typography>
       {loading ? (
-        <LinearProgress />
+        <CircularProgress />
       ) : (
-        projects.map((project) => (
-          <Card key={project.idprojects} className="project-card">
-            <CardContent>
-              <Typography variant="h4" component="div">
-                {project.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {project.description}
-              </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={calculateProgress(project)}
-              />
-              <Typography variant="body2" color="text.secondary">
-                Goal Amount: ${project.goal_amount}
-              </Typography>
-            </CardContent>
-            <Divider />
-            <CardActions>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  handleDelete(project.idprojects);
-                }}
-              >
-                Delete
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/admin/Demande", {
-                    state: { project },
-                  });
-                }}
-              >
-                Demande
-              </Button>
-            </CardActions>
-          </Card>
-        ))
+        <Grid container spacing={2}>
+          {projects.map((project) => (
+            <Grid item xs={12} sm={6} md={4} key={project.idprojects}>
+              <Card className="project-card">
+                <CardContent>
+                  <Typography variant="h6">{project.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {project.description}
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={calculateProgress(project)}
+                  />
+                  <Typography variant="body2" color="text.secondary">
+                    Goal Amount: ${project.goal_amount}
+                  </Typography>
+                </CardContent>
+                <Divider />
+                <CardActions>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      handleDelete(project.idprojects);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate("/admin/Demande", {
+                        state: { project },
+                      });
+                    }}
+                  >
+                    Demande
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       )}
     </div>
   );
