@@ -12,27 +12,33 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const pages = ["games", "movies", "books", "Tech", "Designs"];
 
-function SecondNavbar({ onCategorySelect, handleSearch }) {
+function SecondNavbar({ onCategorySelect, handleSearch, search}) {
   const isAuthenticated = Cookies.get("token");
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState(""); // Add state for search query
+  
 
   const handleLogOut = () => {
     Cookies.remove("token");
     navigate("/login");
   };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    handleSearch(searchQuery);
-  };
   const handleAddProject = () => {
     navigate("/added");
   };
+  
+  const handleSearched = (e) => {
+    const newTerm = e.target.value;
+    search(newTerm);
+  }
+
+
+  
+
+  
+ 
+
+
+  
+  
 
   return (
     <AppBar position="static">
@@ -98,16 +104,20 @@ function SecondNavbar({ onCategorySelect, handleSearch }) {
               justifyContent: "center",
             }}
           >
-            <form onSubmit={handleSearchSubmit}>
+            <form >
               <InputBase
                 placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
+              
+                onChange={handleSearched}
+              
                 sx={{ mr: 1, color: "white" }}
+                
+                
               />
               <Button
                 type="submit"
                 sx={{ color: "white", backgroundColor: "transparent" }}
+            
               >
                 <SearchIcon />
               </Button>
@@ -155,6 +165,6 @@ function SecondNavbar({ onCategorySelect, handleSearch }) {
       </Container>
     </AppBar>
   );
-}
+            }
 
 export default SecondNavbar;

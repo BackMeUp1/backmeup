@@ -1,33 +1,75 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import axios from "axios"
-// import './ModalComponent.css'; 
+import axios from "axios";
 import { useNavigate } from 'react-router';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/system';
+
+const StyledContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: '100vh',
+});
+
+const StyledModal = styled(Paper)({
+  width: '100%',
+  maxWidth: 600,
+  padding: '16px',
+});
+
+const StyledTitle = styled('h2')({
+  fontSize: 24,
+  marginBottom: '16px',
+});
+
+const StyledInput = styled(TextField)({
+  marginBottom: '16px',
+});
+
+const StyledImageInput = styled('input')({
+  display: 'none',
+});
+
+const StyledImagePreview = styled('img')({
+  maxWidth: '100%',
+  marginBottom: '16px',
+});
+
+const StyledButtonGroup = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  '& button': {
+    marginRight: '8px',
+  },
+});
+
 const ModalComponent = (props) => {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [goalAmount, setGoalAmount] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [comment, setComment] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [title,setTitle]= useState("")
-  const [description,setDescription]= useState("")
-  
-  const [goal_amount,setGoal_amount]= useState("")
-const [current_amount,setCurrent]=useState(0)
-  const [startDate,setStartDate]= useState("")
- 
-  const [categories,setCategorie]= useState("")
-  const [endDate,setEndDate]= useState("")
- const [ comment,setComment]= useState("")
-const [iduser,setId]=useState(8)
-const navigate=useNavigate()
- const presetKey="khouloud"
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  console.log(imageUrl);
+
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
+
   const uploadImage = async () => {
     const form = new FormData();
     form.append("file", file);
-    form.append("upload_preset", presetKey );
+    form.append("upload_preset", "khouloud"); // Your Cloudinary upload preset
+
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/dp4k4aemx/image/upload`,
@@ -39,16 +81,7 @@ const navigate=useNavigate()
     }
   };
 
-
-
-
-
-
-
-
-
- const handladd = () => {
-    
+  const handleAdd = () => {
     Swal.fire({
       title: 'Project Submission',
       text: 'Your project will be reviewed by the admin. Please wait for 24 hours for admin approval.',
@@ -57,172 +90,108 @@ const navigate=useNavigate()
       confirmButtonColor: '#3085d6',
     }).then((result) => {
       if (result.isConfirmed) {
-        
         axios.post("http://localhost:4000/api/project/add", {
-          title:title,
-          description:description,
-          goal_amount:goal_amount,
-          current_amount:0,
-          is_approved:0,
-          "start-date":startDate,
+          title,
+          description,
+          goal_amount: goalAmount,
+          current_amount: 0,
+          is_approved: 0,
+          "start-date": startDate,
           "end-date": endDate,
-          comment:comment,
+          comment,
           image: imageUrl,
-          categories:categories,
-          users_iduser:iduser
-
+          categories: selectedCategory,
+          users_iduser: 8,
         })
         .then((res) => {
           console.log(res.data);
-          window.location.reload() 
-          
-        }).catch((err) => console.log(err));
+          navigate("/projects");
+          props.setRefresh(!props.refresh);
+        })
+        .catch((err) => console.log(err));
       }
     });
   };
 
-
-  const Handeltitle = (e)=>{
-    setTitle(e.target.value)
-}
-
-
-const handleDescription =(e)=>{
-    setDescription(e.target.value)
-}
-
-const handlGoal_amount =(e)=>{
-    setGoal_amount(e.target.value)
-}
-
-
-
-const handlcategories =(e)=>{
-    setCategorie(e.target.value)
-  }
-
-  const handlStartDate =(e)=>{
-    setStartDate(e.target.value)
-  }
-
-  const handlEndDate =(e)=>{
-    setEndDate(e.target.value)
-  }
-
-  const handlComment=(e)=>{
-    setComment(e.target.value)
-  }
-  
-
-
-
   return (
-    <div className="container">
-      <div className="modal">
-        <div className="modal__header">
-          <span className="modal__title">New project</span>
-          <button className="button button--icon">
-            <svg
-              width="24"
-              viewBox="0 0 24 24"
-              height="2"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path fill="none" d="M0 0h24v24H0V0z"></path>
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
-            </svg>
-          </button>
-        </div>
-        <div className="modal__body">
-          <div className="input">
-            <label className="input__label">Project title</label>
-            <input className="input__field" type="text" onChange={(e)=>setTitle(e.target.value)} />
-            <p className="input__description">
-              The title must contain a maximum of 32 characters
-            </p>
-          </div>
-          <div className="input">
-            <label className="input__label">Description</label>
-            <textarea className="input__field input__field--textarea" onChange={(e)=>handleDescription(e)}></textarea>
-            <p className="input__description">
-              Give your project a good description so everyone knows what it's for
-            </p>
-             
-            <div className="input input--image">
-            <label className="input__label">Image</label>
-            <input className="input__field input__field--image" type="file" onChange={handleFile} />
-            <button onClick={uploadImage}>add image</button>
-            
-            
-            {imageUrl && (
-       
-       <img src={imageUrl} alt="Uploaded" style={{maxWidth:"100%"}} />
-         )}
-          </div>
-
-          </div>
-          <div className="input">
-            <label className="input__label">Goal Amount</label>
-            <input className="input__field" type="number" onChange={(e)=>handlGoal_amount (e)}/>
-          </div>
-          <div className="input">
-            <label className="input__label">Start Date</label>
-            <input className="input__field" type="date"  onChange={(e)=>handlStartDate(e)} />
-          </div>
-          <div className="input">
-            <label className="input__label">End Date</label>
-            <input className="input__field" type="date"  onChange={(e)=>handlEndDate(e)} />
-          </div>
-          <div className="input">
-            <label className="input__label">Comments</label>
-            <textarea className="input__field input__field--textarea"  onChange={(e)=>handlComment(e)}></textarea>
-          </div>
-          <div className="input">
-            <label className="input__label"  onClick={(e)=>{setCategorie(e.target.value)}} >Category</label>
-            <div className="category-button-group">
-              <button
-                className={`button category-button ${selectedCategory === 'movies' ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory('movies')}
-              >
-                Movies
-              </button>
-              <button
-                className={`button category-button ${selectedCategory === 'games' ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory('games')}
-              >
-                Games
-              </button>
-              <button
-                className={`button category-button ${selectedCategory === 'books' ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory('books')}
-              >
-                Books
-              </button>
-              <button
-                className={`button category-button ${selectedCategory === 'tech' ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory('tech')}
-              >
-                Tech
-              </button>
-              <button
-                className={`button category-button ${selectedCategory === 'designs' ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory('designs')}
-              >
-                Designs
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="modal__footer">
-          <button className="button button--primary" onClick={()=>{handladd()
-          navigate("/projects")
-          props.setrefresh(!props.refresh) }}
-         
-        
-     >Create project</button>
-        </div>
-      </div>
-    </div>
+    <StyledContainer>
+      <StyledModal elevation={3}>
+        <StyledTitle>New Project</StyledTitle>
+        <StyledInput
+          label="Project Title"
+          fullWidth
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <TextareaAutosize
+          className={StyledInput}
+          rowsMin={4}
+          placeholder="Description"
+          fullWidth
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        {imageUrl && (
+          <StyledImagePreview
+            src={imageUrl}
+            alt="Uploaded"
+          />
+        )}
+        <StyledImageInput
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={handleFile}
+        />
+        <label htmlFor="image">
+          <Button
+            variant="outlined"
+            component="span"
+            startIcon={<CloudUploadIcon />}
+          >
+            Add Image
+          </Button>
+        </label>
+        <StyledInput
+          label="Goal Amount"
+          type="number"
+          fullWidth
+          value={goalAmount}
+          onChange={(e) => setGoalAmount(e.target.value)}
+        />
+        <StyledInput
+          label="Start Date"
+          type="date"
+          fullWidth
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <StyledInput
+          label="End Date"
+          type="date"
+          fullWidth
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <TextareaAutosize
+          className={StyledInput}
+          rowsMin={4}
+          placeholder="Comments"
+          fullWidth
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <StyledButtonGroup>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAdd}
+          >
+            Create Project
+          </Button>
+        </StyledButtonGroup>
+      </StyledModal>
+    </StyledContainer>
   );
 };
 
