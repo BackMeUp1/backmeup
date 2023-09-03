@@ -45,7 +45,6 @@ function App() {
 
   const stalUpdated =(obj)=>{
     setUpdate (obj)
-    
   }
 
   const search = (searchTerm) => {
@@ -163,6 +162,7 @@ function App() {
                 projected={projects}
                 stalTwo={stalUpdated}
               />
+               <Footer />
             </ProtectedRoute>
           }
         />
@@ -173,6 +173,7 @@ function App() {
             <ProtectedRoute role="user">
               <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <Added ading={ading} refresh={refresh} setrefresh={setrefresh} />
+              <Footer />
             </ProtectedRoute>
           }
         />
@@ -187,7 +188,9 @@ function App() {
               )
             ) : (
               <Login />
+              
             )
+            
           }
         />
         <Route
@@ -197,6 +200,7 @@ function App() {
               <ProtectedRoute role="user">
               <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
                 <Home projects={projects} />
+                <Footer />
               </ProtectedRoute>
             </>
           }
@@ -207,7 +211,18 @@ function App() {
             <>
               <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <ProjectDetail project={selected} />
+              <Footer />
             </>
+          }
+        />
+        <Route
+          path="/contact" 
+          element={
+            <ProtectedRoute role="user">
+             <ContactUs />
+             <Footer />
+             <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
+            </ProtectedRoute>
           }
         />
         <Route
@@ -245,16 +260,10 @@ function App() {
             </ProtectedRoute>
           }
         />
-          <Route
-          path="/contact" 
-          element={
-            <ProtectedRoute role="admin">
-             <ContactUs />
-            </ProtectedRoute>
-          }
-        />
+          
       </Routes>
-      <Footer />
+      
+     
     </BrowserRouter>
   );
 }
