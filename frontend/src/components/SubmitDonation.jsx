@@ -1,94 +1,51 @@
 import { useEffect } from "react"
 import  React, {useState} from 'react'
 import axios from "axios"
+import "./SubmissionDonation.css"
 
 
-export default function SubmitDonation (props) {
-
-const{_id,name,traits,affiliations,image,description}=props.updated
-const [names,setNames]= useState("")
-const [traites,setTraits]= useState("")
-const [affiliation,setAffiliation]= useState("")
-const [images,setImages]= useState("")
-const [descriptions,setDescriptions]= useState("")
+export default function  SubmitDonation (props) {
+  const{idprojects,current_amount}=props.updated
+const [Amount,setAmount]= useState("")
 
 useEffect(()=>{
-setNames(name)
-setTraits(traits)
-setAffiliation(affiliations)
-setImages(image)
-setDescriptions(description)
-},[])
+  setAmount(current_amount)
+  
+  },[])
 
-const handelclick =() =>{
-axios.put(`http://localhost:5000/api/charachter/${_id}`,{
-name:names,
-traits:traites,
-affiliations:affiliation,
-image:images,
-description:descriptions,
-}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{console.log(err)})
-}
 
-return (
+  const handelclick =() =>{
+    axios.put(`http://localhost:4000/api/project/Amount/${idprojects}`, {
+      current_amount:parseFloat(Amount),
+    }).then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err));
+    }
+
+    return (
     <div>
-        <div>
-           <input
-        
-        required
-        id="outlined-required"
-        label="name"
-        defaultValue={name}
-        onChange={(e)=>setNames(e.target.value)}
-      />
-      <input
+      <h2>Donate to {props.updated.title}</h2>
+      <p>{props.updated.description}</p>
+      <p>Current Amount: ${props.updated.current_amount}</p>
+      <label>
+        New Amount (in dollars):
+        <input
+          type="number"
+          
+          onChange={(e)=>setAmount(e.target.value)}
+          required
+        />
+      </label>
+      <button onClick={()=>{
       
-      required
-      id="outlined-required"
-      label="traits"
-      defaultValue={traits}
-      onChange={(e)=>setTraits(e.target.value)}
-    />
-
-    <input
-      
-        required
-        id="outlined-required"
-        label="affiliation"
-        defaultValue={affiliations}
-        onChange={(e)=>setAffiliation(e.target.value)}
-      />
-    <input
-      
-      required
-      id="outlined-required"
-      label="image"
-      defaultValue={image}
-      onChange={(e)=>setImages(e.target.value)}
-    />
-    <input
-      
-      required
-      id="outlined-required"
-      label="description"
-      defaultValue={description}
-      onChange={(e)=>setDescriptions(e.target.value)}
-    />
+      handelclick()
+  alert("updated succesfully")
+  
+  }
+  
+  }>Update Donation Amount</button>
+     
     </div>
-    <button
-    onClick={()=>{
-      
-        handelclick()
-    alert("updated succesfully")
-    
-    }
-    
-    }
-    >update</button>
- 
-
-    </div>
-  )
-}
+  );
+};
