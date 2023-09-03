@@ -18,7 +18,8 @@ import {
 const AllProject = (props) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showDemande, setShowDemande] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,13 +27,14 @@ const AllProject = (props) => {
       .get("http://localhost:4000/api/project/get")
       .then((response) => {
         setProjects(response.data);
-        setLoading(false); // Data loading is complete
+        setLoading(false);
+        setTrigger(!trigger);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false); // Data loading failed
+        setLoading(false);
       });
-  }, []);
+  }, [trigger]);
 
   const handleDelete = (id) => {
     axios
@@ -42,9 +44,28 @@ const AllProject = (props) => {
           setProjects((prevProjects) =>
             prevProjects.filter((project) => project.id !== id)
           );
+          setTrigger(!trigger);
         }
       })
       .catch((error) => console.log(error));
+  };
+
+  const getPermission = () => {
+    axios
+      .get("http://localhost:4000/api/project/getPermission")
+      .then((res) => {
+        setProjects(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const permissionOne = () => {
+    axios
+      .get("http://localhost:4000/api/project/permissionOne")
+      .then((res) => {
+        setProjects(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const calculateProgress = (project) => {
@@ -56,13 +77,13 @@ const AllProject = (props) => {
 
   return (
     <div className="centered-container">
-            <AdminNavbar search={props.search}/>
+      <AdminNavbar search={props.search} />
       <div className="button-container">
-        <Button variant="contained" onClick={() => {}}>
-          Approved
-        </Button>
-        <Button variant="contained" onClick={() => {}}>
+        <Button variant="contained" onClick={getPermission}>
           Not Approved
+        </Button>
+        <Button variant="contained" onClick={permissionOne}>
+          Approved
         </Button>
       </div>
       <Typography variant="h4" gutterBottom>
