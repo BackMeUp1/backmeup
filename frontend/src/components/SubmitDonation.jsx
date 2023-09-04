@@ -1,51 +1,64 @@
-import { useEffect } from "react"
-import  React, {useState} from 'react'
-import axios from "axios"
-import "./SubmissionDonation.css"
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; // Import useParams
+import './SubmissionDonation.css';
 
+export default function SubmitDonation(props) {
+  const { current_amount, updated, stalUpdated } = props;
+  const [Amount, setAmount] = useState('');
+  const { idprojects } = useParams(); // Get idprojects from route parameters
 
-export default function  SubmitDonation (props) {
-  const{idprojects,current_amount}=props.updated
-const [Amount,setAmount]= useState("")
+  useEffect(() => {
+    setAmount('');
+  }, [updated]);
 
-useEffect(()=>{
-  setAmount(current_amount)
-  
-  },[])
-
-
-  const handelclick =() =>{
-    axios.put(`http://localhost:4000/api/project/Amount/${idprojects}`, {
-      current_amount:parseFloat(Amount),
-    }).then((result) => {
-      console.log(result);
-    })
-    .catch((err) => console.log(err));
+  const handleUpdateAmount = () => {
+    if (!idprojects) {
+      alert('Invalid project ID');
+      return;
     }
+  
+    // Parse the input value as a float
+    const newDonation = parseFloat(Amount);
+  
+    // Check if the parsed value is a valid number
+    if (!isNaN(newDonation)) {
+      const updatedAmount = current_amount + newDonation;
+  
+      axios
+        .put(`http://localhost:4000/api/project/Amount/${idprojects}`, {
+          current_amount: updatedAmount,
+        })
+        .then((result) => {
+          console.log(result);
+          alert('Donation added successfully');
+          setAmount('');
+          stalUpdated({ ...updated, current_amount: updatedAmount });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert('Please enter a valid number for the donation amount.');
+    }
+  };
+  
 
-    return (
+  return (
     <div>
-      <h2>Donate to {props.updated.title}</h2>
-      <p>{props.updated.description}</p>
-      <p>Current Amount: ${props.updated.current_amount}</p>
+      <h2>Donate to {updated.title}</h2>
+      <p>{updated.description}</p>
+      <p>Current Amount: ${updated.current_amount}</p>
       <label>
         New Amount (in dollars):
         <input
           type="number"
-          
-          onChange={(e)=>setAmount(e.target.value)}
+          value={Amount}
+          onChange={(e) => setAmount(e.target.value)}
           required
         />
       </label>
-      <button onClick={()=>{
-      
-      handelclick()
-  alert("updated succesfully")
-  
-  }
-  
-  }>Update Donation Amount</button>
-     
+      <button onClick={handleUpdateAmount} type="button">
+        Update Donation Amount
+      </button>
     </div>
   );
-};
+}

@@ -177,17 +177,17 @@ const ProjectList = (props) => {
                   </Box>
                 </Box>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                 
-                    navigate("/SubmitDonation", { state: { project } }   )
-                    props.stalTwo(project) ;
-                  
-                  }}
-                >
-                  Donate
-                </Button>
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      navigate(`/SubmitDonation/${project.idprojects}`, {
+                        state: { project },
+                      });
+                      props.stalTwo(project);
+                    }}
+                  >
+                    Donate
+                  </Button>
               </CardActions>
             </Card>
           </Grid>

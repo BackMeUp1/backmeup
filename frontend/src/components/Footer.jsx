@@ -29,9 +29,10 @@ const Footer = () => {
     marginRight: "8px",
     color: "#fff",
   };
-  const handleContact = () => {
-    navigate("contact");
-  };
+  const handleContact=()=>{
+    navigate("/contact")
+  }
+
 
   return (
     <Box style={footerStyle}>
