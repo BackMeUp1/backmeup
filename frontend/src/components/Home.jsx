@@ -68,7 +68,7 @@ export default function Home({ projects }) {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="h6">Total Backers</Typography>
-                <Typography variant="body1">{totalBackers}</Typography>
+                <Typography variant="body1"> 10</Typography>
               </Grid>
             </Grid>
           </Paper>
