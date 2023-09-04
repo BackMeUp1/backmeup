@@ -98,7 +98,7 @@ const ModalComponent = (props) => {
   }
 
   return (
-    <div className="container">
+    <div className="container-modal">
       <div className="input">
         <label className="input__label">Project title</label>
         <input className="input__field" type="text" onChange={(e)=>setTitle(e.target.value)} />
