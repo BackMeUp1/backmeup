@@ -48,6 +48,7 @@ const ModalComponent = (props) => {
       confirmButtonColor: '#3085d6',
     }).then((result) => {
       if (result.isConfirmed) {
+        const imageValue = imageUrl || ''
         axios.post("http://localhost:4000/api/project/add", {
           title: title,
           description: description,
@@ -57,19 +58,20 @@ const ModalComponent = (props) => {
           "start-date": startDate,
           "end-date": endDate,
           comment: comment,
-          image: imageUrl,
+          image: imageValue,
           categories: categories,
           users_iduser: iduser
         })
         .then((res) => {
           console.log(res.data);
-          window.location.reload();
+       
+         
         }).catch((err) => console.log(err));
       }
     });
   };
 
-  const Handeltitle = (e)=>{
+  const Handeltitle = (e) => {
     setTitle(e.target.value);
   }
 
@@ -101,7 +103,8 @@ const ModalComponent = (props) => {
     <div className="container">
       <div className="input">
         <label className="input__label">Project title</label>
-        <input className="input__field" type="text" onChange={(e)=>setTitle(e.target.value)} />
+        <input className="input__field" type="text" onChange={(e) => Handeltitle(e)} />
+
         <p className="input__description">
           The title must contain a maximum of 32 characters
         </p>
