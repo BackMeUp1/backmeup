@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import InputBase from "@mui/material/InputBase";
 
-const pages = ["Games", "Movies", "Books", "Tech", "Designs"];
+const pages = ["games", "movies", "books", "Tech", "Designs"];
 
 function SecondNavbar({ onCategorySelect, search }) {
   const isAuthenticated = Cookies.get("token");

@@ -21,7 +21,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  LinearProgress, // Import LinearProgress component
+  LinearProgress, 
 } from "@mui/material";
 import {
   Share as ShareIcon,
@@ -66,7 +66,7 @@ import './ProjectList.css';
 const ProjectList = (props) => {
   const navigate = useNavigate();
 
-  const { projects, setSelected ,filProjects,projected  } = props;
+  const { projects, setSelected ,projected ,filProjects } = props;
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
 
@@ -76,7 +76,8 @@ const ProjectList = (props) => {
   };
 
   const projectsToRender =
-    filProjects && filProjects.length > 0 ? filProjects : projects;
+  filProjects && filProjects.length > 0 ? filProjects : projected; 
+   
 
   const toggleDescription = (index, expanded) => {
     const newExpandedDescriptions = [...expandedDescriptions];
@@ -94,7 +95,7 @@ const ProjectList = (props) => {
         Projects Asking for Backings at This Date:
       </Typography>
       <Grid container spacing={3}>
-        {projected.map((project, index) => (
+        {projectsToRender.map((project, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card
               style={cardStyle}
@@ -117,6 +118,7 @@ const ProjectList = (props) => {
                       onClick={() => handleImageClick(project)}
                     >
                       {project.title}
+                      
                     </span>
                   </Typography>
                   <Collapse
@@ -155,6 +157,9 @@ const ProjectList = (props) => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Current amount: ${project.current_amount}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Category: {project.categories}
                     </Typography>
                     <LinearProgress
                       variant="determinate"

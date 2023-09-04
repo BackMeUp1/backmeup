@@ -52,22 +52,22 @@ function App() {
       if (searchTerm === '') {
         return setTrigger(!trigger)
       }
-      const filteredData = projects.filter((e) =>
+      const projected = projects.filter((e) =>
         e.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setProjects(filteredData);
+      setProjects(projected);
     };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/project/permissionOne")
-      .then((response) => {
-        setProjects(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [trigger]);
+    useEffect(() => {
+      axios
+        .get("http://localhost:4000/api/project/permissionOne")
+        .then((response) => {
+          setProjects(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }, [trigger]);
 
   const handleProjectSelect = (project) => {
     setSelected(project);
@@ -75,14 +75,17 @@ function App() {
   };
 
   const handleCategorySelect = (category) => {
-    setSearchQuery("");
-    setSelected(null);
-    const newFilteredProjects = category
-      ? projects.filter((project) => project.categories === category)
-      : projects;
+    // setSearchQuery("");
+    // setSelected(null);
+    // const newFilteredProjects = projects.filter((project) => {
+  
+    //  return  project.categories.toLowerCase().includes(category.toLowerCase())})
 
-    setFilteredProjects(newFilteredProjects);
-  };
+  setFilteredProjects(projects.filter((project) => {
+  
+    return  project.categories.toLowerCase().includes(category.toLowerCase())}));
+  console.log(filteredProjects);
+    };
 
   const isAuthenticated = Cookies.get("token");
 
@@ -162,7 +165,7 @@ function App() {
                 setSelected={setSelected}
                 filProjects={filteredProjects}
                 projected={projects}
-                stalTwo={stalUpdated}
+               stalTwo={stalUpdated}
               />
                <Footer />
             </ProtectedRoute>
