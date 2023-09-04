@@ -31,7 +31,7 @@ const Footer = () => {
     color: "#fff",
   };
   const handleContact=()=>{
-    navigate("contact")
+    navigate("/contact")
   }
 
   return (

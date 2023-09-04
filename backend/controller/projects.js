@@ -52,14 +52,19 @@ const getProject = (req, res) => {
 
 
   const UpdateAmount = (req, res) => {
-    const {id}=req.params
+    const { id } = req.params;
     const updatedData = req.body;
-    console.log(updatedData,"updated");
-    putAmount(id, updatedData.updatedData, function (err, results) {
-      if (err) res.status(500).send(err);
-      else res.json(results);
+    console.log(updatedData, "updated"); // Log updated data
+    putAmount(id, updatedData.current_amount, function (err, results) {
+      if (err) {
+        console.error(err); // Log the error
+        res.status(500).send(err);
+      } else {
+        res.json(results);
+      }
     });
   };
+  
 
   const RemoveProject = (req, res) => {
     const id = req.params.id;

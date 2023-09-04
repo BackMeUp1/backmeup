@@ -27,7 +27,8 @@ function App() {
   const [adino, setAdino] = useState({});
   const [trigger,setTrigger] = useState(false)
   const [updated,setUpdate] = useState({})
-  
+  const [idprojects, setIdProjects] = useState(null); // Store idprojects here
+
   const ading = () => {
     setAdino({
       title,
@@ -70,6 +71,7 @@ function App() {
 
   const handleProjectSelect = (project) => {
     setSelected(project);
+    setIdProjects(project.idprojects); // Set idprojects here
   };
 
   const handleCategorySelect = (category) => {
@@ -208,20 +210,30 @@ function App() {
         <Route
           path="/ProjectDetail"
           element={
-            <>
+            <ProtectedRoute role="user">
               <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
               <ProjectDetail project={selected} />
               <Footer />
-            </>
+              </ProtectedRoute>
           }
+        />
+        <Route
+          path="/SubmitDonation/:idprojects"
+          element={
+            <ProtectedRoute role="user">
+          <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
+          <SubmitDonation updated={updated} stalUpdated={stalUpdated} />
+          <Footer />
+          </ProtectedRoute>
+        }
         />
         <Route
           path="/contact" 
           element={
             <ProtectedRoute role="user">
+             <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
              <ContactUs />
              <Footer />
-             <SecondNavbar projectList={projectList} search={search} onCategorySelect={handleCategorySelect} />
             </ProtectedRoute>
           }
         />
@@ -233,7 +245,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/SubmitDonation" element={<SubmitDonation  updated={updated} />  } />
+       
+
 
         <Route
           path="/admin/All-project"
